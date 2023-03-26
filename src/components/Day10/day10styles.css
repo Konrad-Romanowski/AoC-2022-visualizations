@@ -1,0 +1,7 @@
+.instructions {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 360px;
+    list-style: none;
+}

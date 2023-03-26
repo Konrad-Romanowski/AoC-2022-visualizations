@@ -1,5 +1,6 @@
 import React from 'react';
 import {Routes, Route, NavLink} from 'react-router-dom';
+import Day10 from './components/Day10/Day10';
 
 export default function App () {
     return (
@@ -11,7 +12,7 @@ export default function App () {
             </nav>
             <Routes>
                 <Route path="/" element={<p>This is main route</p>} />
-                <Route path="/Day10" element={<p>This is Day10</p>} />
+                <Route path="/Day10" element={<Day10 />} />
                 <Route path="/Day17" element={<p>This is Day17</p>} />
             </Routes>
         </main>
