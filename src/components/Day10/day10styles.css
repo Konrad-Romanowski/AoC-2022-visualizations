@@ -1,7 +1,23 @@
+.crt-container {
+    display: grid;
+    height: 150px;
+    grid-template-rows: repeat(6, 1rem);
+    grid-template-columns: repeat(40,1rem);
+    gap: 2px;
+    justify-content: center;
+    align-content: center;
+}
+
+.crt-pixel {
+    background-color: #cacaca;
+    border-radius: 2px;
+}
+
 .instructions {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     height: 360px;
     list-style: none;
+    align-content: space-around;
 }
