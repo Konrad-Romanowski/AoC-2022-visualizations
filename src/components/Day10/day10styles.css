@@ -13,6 +13,10 @@
     border-radius: 2px;
 }
 
+.crt-pixel.active {
+    background-color: var(--main-theme-color);
+}
+
 .instructions {
     display: flex;
     flex-direction: column;
@@ -20,4 +24,8 @@
     height: 360px;
     list-style: none;
     align-content: space-around;
+}
+
+.instructions > li {
+    padding: 0 .5rem;
 }

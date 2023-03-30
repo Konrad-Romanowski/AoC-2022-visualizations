@@ -20,12 +20,6 @@ export default function Day10() {
         getInputData();
     },[]);
 
-    function addCycle() {
-        setTimeout(()=>{
-            setCycle(prevCycle=>prevCycle+1)
-        },500);
-    }
-
     return (
         <article>
             <header className='sub-header'>Day 10 part 2 visualization</header>
@@ -33,12 +27,17 @@ export default function Day10() {
                 isAnimationRunning={isAnimationRunning}
                 setIsAnimationRunning={setIsAnimationRunning}
             />
-            <CRT isAnimationRunning={isAnimationRunning}/>
+            <CRT
+                cycle={cycle}
+                isAnimationRunning={isAnimationRunning}
+            />
             <Instructions
                 instructions={inputData}
                 isAnimationRunning={isAnimationRunning}
+                setIsAnimationRunning={setIsAnimationRunning}
                 cycle={cycle}
-                addCycle={addCycle}
+                setCycle={setCycle}
+                // addCycle={addCycle}
             />
         </article>
     )
