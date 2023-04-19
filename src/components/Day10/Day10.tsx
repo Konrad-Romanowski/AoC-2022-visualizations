@@ -8,7 +8,11 @@ export default function Day10() {
 
     const [inputData, setInputData] = React.useState<string[]>([]);
     const [isAnimationRunning,setIsAnimationRunning] = React.useState(false);
+    const [Xregister,setXregister] = React.useState(0);
     const [cycle,setCycle] = React.useState(0);
+    const [pixels, setPixels] = React.useState(()=>{
+        return Array.from({length:240},pixel => false)
+    });
 
     React.useEffect(()=>{
         async function getInputData() {
@@ -29,7 +33,9 @@ export default function Day10() {
             />
             <CRT
                 cycle={cycle}
+                Xregister={Xregister}
                 isAnimationRunning={isAnimationRunning}
+                pixels={pixels}
             />
             <Instructions
                 instructions={inputData}
@@ -37,7 +43,10 @@ export default function Day10() {
                 setIsAnimationRunning={setIsAnimationRunning}
                 cycle={cycle}
                 setCycle={setCycle}
-                // addCycle={addCycle}
+                Xregister={Xregister}
+                setXregister={setXregister}
+                pixels={pixels}
+                setPixels={setPixels}
             />
         </article>
     )

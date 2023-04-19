@@ -1,11 +1,18 @@
 .crt-container {
-    display: grid;
+    display: flex;
     height: 150px;
+    justify-content: center;
+    align-items: center;
+}
+
+.crt {
+    display: grid;
     grid-template-rows: repeat(6, 1rem);
     grid-template-columns: repeat(40,1rem);
     gap: 2px;
     justify-content: center;
     align-content: center;
+    position: relative;
 }
 
 .crt-pixel {
@@ -13,8 +20,28 @@
     border-radius: 2px;
 }
 
-.crt-pixel.active {
+.crt-pixel.active::before {
     background-color: var(--main-theme-color);
+    content: "";
+    height: 16px;
+    width: 16px;
+    position: absolute;
+    border-radius: 50%;
+}
+
+.crt-pixel.filled {
+    background-color: black;
+}
+
+.sprite {
+    width: 56px;
+    height: 20px;
+    content: "";
+    background-color: #ff000070;
+    position: absolute;
+    border-radius: 2px;
+    transform: translate(-2px,-2px);
+    transition: transform 200ms;
 }
 
 .instructions {
