@@ -1,6 +1,7 @@
 import React from 'react';
-import CRT from './CRT';
 import AnimationController from '../AnimationController/AnimationController';
+import CRT from './CRT';
+import ParametersDisplay from './ParametersDisplay';
 import Instructions from './Instructions';
 import './day10styles.css';
 
@@ -36,6 +37,10 @@ export default function Day10() {
                 Xregister={Xregister}
                 isAnimationRunning={isAnimationRunning}
                 pixels={pixels}
+            />
+            <ParametersDisplay
+                cycle={cycle}
+                Xregister={Xregister}
             />
             <Instructions
                 instructions={inputData}
