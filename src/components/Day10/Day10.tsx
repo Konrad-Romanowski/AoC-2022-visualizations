@@ -8,7 +8,11 @@ export default function Day10() {
 
     const [inputData, setInputData] = React.useState<string[]>([]);
     const [isAnimationRunning,setIsAnimationRunning] = React.useState(false);
+    const [Xregister,setXregister] = React.useState(0);
     const [cycle,setCycle] = React.useState(0);
+    const [pixels, setPixels] = React.useState(()=>{
+        return Array.from({length:240},pixel => false)
+    });
 
     React.useEffect(()=>{
         async function getInputData() {
@@ -20,12 +24,6 @@ export default function Day10() {
         getInputData();
     },[]);
 
-    function addCycle() {
-        setTimeout(()=>{
-            setCycle(prevCycle=>prevCycle+1)
-        },500);
-    }
-
     return (
         <article>
             <header className='sub-header'>Day 10 part 2 visualization</header>
@@ -33,12 +31,22 @@ export default function Day10() {
                 isAnimationRunning={isAnimationRunning}
                 setIsAnimationRunning={setIsAnimationRunning}
             />
-            <CRT isAnimationRunning={isAnimationRunning}/>
+            <CRT
+                cycle={cycle}
+                Xregister={Xregister}
+                isAnimationRunning={isAnimationRunning}
+                pixels={pixels}
+            />
             <Instructions
                 instructions={inputData}
                 isAnimationRunning={isAnimationRunning}
+                setIsAnimationRunning={setIsAnimationRunning}
                 cycle={cycle}
-                addCycle={addCycle}
+                setCycle={setCycle}
+                Xregister={Xregister}
+                setXregister={setXregister}
+                pixels={pixels}
+                setPixels={setPixels}
             />
         </article>
     )

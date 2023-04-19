@@ -13,7 +13,7 @@ export default function App () {
             <Routes>
                 <Route path="/" element={<p>This is main route</p>} />
                 <Route path="/Day10" element={<Day10 />} />
-                <Route path="/Day17" element={<p>This is Day17</p>} />
+                <Route path="/Day14" element={<p>This is Day14</p>} />
             </Routes>
         </main>
     )
