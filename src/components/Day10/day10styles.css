@@ -1,8 +1,9 @@
 .crt-container {
     display: flex;
-    height: 150px;
+    /* height: 150px; */
     justify-content: center;
     align-items: center;
+    margin: 1.5rem 0;
 }
 
 .crt {
@@ -42,6 +43,35 @@
     border-radius: 2px;
     transform: translate(-2px,-2px);
     transition: transform 200ms;
+}
+
+.crt-parameters {
+    display: flex;
+    /* height: 2rem; */
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.crt-parameters > li {
+    line-height: 1.5rem;
+    padding: 0 1rem;
+    border-radius: 1rem;
+}
+
+.crt-parameters > li.crt-parameters-cycle {
+    background-color: var(--main-theme-color);
+    color: white;
+}
+
+.crt-parameters > li.crt-parameters-X {
+    background-color: #ff000070;
+}
+
+.crt-parameters > li.crt-parameters-current-pixel {
+    background-color: #00ff2270;
 }
 
 .instructions {

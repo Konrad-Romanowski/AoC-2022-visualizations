@@ -24,7 +24,7 @@ export default function Instructions(
                 setTimeout(()=>{
                     setCycle(prevCycle=>prevCycle+1);
                     resolve();
-                },400)
+                },100)
             })
         }
 
