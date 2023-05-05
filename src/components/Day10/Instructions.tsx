@@ -24,7 +24,7 @@ export default function Instructions(
                 setTimeout(()=>{
                     setCycle(prevCycle=>prevCycle+1);
                     resolve();
-                },100)
+                },300)
             })
         }
 
@@ -40,17 +40,23 @@ export default function Instructions(
                 await addCycle();
             } else {
                 const XregisterUpdate:number = parseInt(instruction.split(" ")[1]);
+                await addCycle();
+                await addCycle();
                 setXregister(prevX=>prevX+XregisterUpdate);
-                await addCycle();
-                await addCycle();
             }
             await getNextInstruction();
-        }
+        }    
 
         if(isAnimationRunning && currentInstructionIndex < instructions.length) {
             const currentInstruction = instructions[currentInstructionIndex];
             readInstruction(currentInstruction);
         }
+
+        if(currentInstructionIndex >= instructions.length) {
+            setIsAnimationRunning(false);
+            //set start-stop controller button inactive
+        }
+
     },[currentInstructionIndex,isAnimationRunning])
 
     React.useEffect(()=>{

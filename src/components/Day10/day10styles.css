@@ -1,6 +1,5 @@
 .crt-container {
     display: flex;
-    /* height: 150px; */
     justify-content: center;
     align-items: center;
     margin: 1.5rem 0;
@@ -47,7 +46,6 @@
 
 .crt-parameters {
     display: flex;
-    /* height: 2rem; */
     justify-content: center;
     align-items: center;
     list-style: none;

@@ -17,9 +17,9 @@ export default function CRT({isAnimationRunning, cycle, Xregister, pixels}: CRTp
         return <div className={pixelClassName} key={index}></div>
     });
 
-    // to verify X position of the sprite
     const spriteStyle = {
-        transform: `translate(${Xregister*16+2*(Xregister-2)-16}px,${Math.floor(cycle/40)*16+2*(Math.floor(cycle/40)-1)}px)`
+        transform: `translate(${Xregister*16+2*(Xregister-2)-16}px,${Math.floor(cycle/40)*16+2*(Math.floor(cycle/40)-1)}px)`,
+        display: cycle>=240 ? "none" : "block"
     }
 
     return (
