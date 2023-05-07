@@ -27,6 +27,10 @@
     width: 16px;
     position: absolute;
     border-radius: 50%;
+
+    animation-name: cycleUpdate;
+    animation-duration: 300ms;
+    animation-fill-mode: forwards;
 }
 
 .crt-pixel.filled {
@@ -83,4 +87,13 @@
 
 .instructions > li {
     padding: 0 .5rem;
+}
+
+@keyframes cycleUpdate {
+    0% {
+        transform: translateX(-16px);
+    }
+    100% {
+        transform: translateX(0px);
+    }
 }
