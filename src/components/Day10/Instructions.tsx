@@ -8,12 +8,11 @@ interface InstructionsProps {
     setCycle: React.Dispatch<React.SetStateAction<number>>;
     Xregister:number;
     setXregister: React.Dispatch<React.SetStateAction<number>>;
-    pixels: boolean[];
     setPixels: React.Dispatch<React.SetStateAction<boolean[]>>;
 }
 
 export default function Instructions(
-    {instructions,isAnimationRunning, setIsAnimationRunning, cycle, setCycle, Xregister, setXregister, pixels, setPixels}: InstructionsProps) {
+    {instructions,isAnimationRunning, setIsAnimationRunning, cycle, setCycle, Xregister, setXregister, setPixels}: InstructionsProps) {
 
     const [currentInstructionIndex, setCurrentInstructionIndex] = React.useState(0);
 

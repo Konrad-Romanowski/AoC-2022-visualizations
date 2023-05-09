@@ -9,9 +9,7 @@ export default function Day10() {
 
     const [inputData, setInputData] = React.useState<string[]>([]);
     const [isAnimationRunning,setIsAnimationRunning] = React.useState(false);
-
     const [Xregister,setXregister] = React.useState(1);
-
     const [cycle,setCycle] = React.useState(0);
     const [pixels, setPixels] = React.useState(()=>{
         return Array.from({length:240},pixel => false)
@@ -37,7 +35,6 @@ export default function Day10() {
             <CRT
                 cycle={cycle}
                 Xregister={Xregister}
-                isAnimationRunning={isAnimationRunning}
                 pixels={pixels}
             />
             <ParametersDisplay
@@ -52,7 +49,6 @@ export default function Day10() {
                 setCycle={setCycle}
                 Xregister={Xregister}
                 setXregister={setXregister}
-                pixels={pixels}
                 setPixels={setPixels}
             />
         </article>

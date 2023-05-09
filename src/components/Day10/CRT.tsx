@@ -3,11 +3,10 @@ import React from 'react';
 interface CRTprops {
     cycle: number;
     Xregister: number;
-    isAnimationRunning: boolean;
     pixels:boolean[];
 }
 
-export default function CRT({isAnimationRunning, cycle, Xregister, pixels}: CRTprops) {
+export default function CRT({cycle, Xregister, pixels}: CRTprops) {
 
     const CRTdisplay = pixels.map((pixel,index) => {
         let pixelClassName = `crt-pixel`;
