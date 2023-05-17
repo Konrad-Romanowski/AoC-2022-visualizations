@@ -1,12 +1,12 @@
-import CRTtypes from './CRTtypes'
+import CRT from './CRTInterface'
 
 interface ParametersDisplayProps {
-    CRT: CRTtypes
+    CRTparameters: CRT
 }
 
-export default function ParametersDisplay({CRT}:ParametersDisplayProps) {
+export default function ParametersDisplay({CRTparameters}:ParametersDisplayProps) {
 
-    const {X, cycle} = CRT;
+    const {X, cycle} = CRTparameters;
     
     return (
         <ul className="crt-parameters">

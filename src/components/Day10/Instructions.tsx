@@ -1,28 +1,27 @@
-import React from "react";
-import CRTtypes from "./CRTtypes"
+import React from 'react';
+import CRT from './CRTInterface'
 
 interface InstructionsProps {
     instructions: string[];
     isAnimationRunning: boolean;
     setIsAnimationRunning: React.Dispatch<React.SetStateAction<boolean>>;
-    CRT: CRTtypes;
-    setCRT: React.Dispatch<React.SetStateAction<CRTtypes>>
+    CRTparameters: CRT;
+    setCRTparameters: React.Dispatch<React.SetStateAction<CRT>>
 }
 
 export default function Instructions(
-    {instructions,isAnimationRunning, setIsAnimationRunning, CRT, setCRT}: InstructionsProps)
+    {instructions,isAnimationRunning, setIsAnimationRunning, CRTparameters, setCRTparameters}: InstructionsProps)
 {
 
-    const {cycle,X} = CRT;
-
     const [currentInstructionIndex, setCurrentInstructionIndex] = React.useState(0);
+    const {cycle,X} = CRTparameters;
 
     React.useEffect(()=>{
 
         const addCycle = (): Promise<void> => {
             return new Promise<void>((resolve,reject)=>{
                 setTimeout(()=>{
-                    setCRT(prev => {
+                    setCRTparameters(prev => {
                         return {...prev, cycle: prev.cycle+1}
                     })
                     resolve();
@@ -32,7 +31,7 @@ export default function Instructions(
 
         const getNextInstruction = (): Promise<void> => {
             return new Promise<void> ((resolve,reject)=>{
-                setCurrentInstructionIndex(prevIndex=>prevIndex+1);
+                setCurrentInstructionIndex(prevIndex => prevIndex+1);
                 resolve();
             })
         }
@@ -44,8 +43,8 @@ export default function Instructions(
                 const XregisterUpdate:number = parseInt(instruction.split(" ")[1]);
                 await addCycle();
                 await addCycle();
-                setCRT(prev=>{
-                    return {...prev, X: prev.X+1}
+                setCRTparameters(prev=>{
+                    return {...prev, X: prev.X + XregisterUpdate}
                 })
             }
             await getNextInstruction();
@@ -65,14 +64,14 @@ export default function Instructions(
 
     React.useEffect(()=>{
         if(Math.abs(cycle%40-X)<=1) {
-            setCRT(prev => {
+            setCRTparameters(prev => {
                 const newDisplay = [...prev.display];
                 newDisplay[cycle] = true;
 
                 return {...prev, display: newDisplay}
             })
         }
-    },[CRT.cycle])
+    },[CRTparameters])
 
     const highlightedStyle = {
         backgroundColor: "var(--main-theme-color)",

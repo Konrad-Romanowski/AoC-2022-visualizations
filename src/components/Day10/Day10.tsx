@@ -4,16 +4,11 @@ import CRTdisplay from './CRTdisplay';
 import ParametersDisplay from './ParametersDisplay';
 import Instructions from './Instructions';
 import './day10styles.css';
+import CRT from './CRTInterface';
 
 export default function Day10() {
 
-    interface CRTparameters {
-        X: number;
-        cycle: number;
-        display: boolean[];
-    }
-
-    const [CRT,setCRT] = React.useState<CRTparameters>(
+    const [CRTparameters,setCRTparameters] = React.useState<CRT>(
         {
             X: 1,
             cycle: 0,
@@ -42,22 +37,17 @@ export default function Day10() {
                 setIsAnimationRunning={setIsAnimationRunning}
             />
             <CRTdisplay
-                CRT={CRT}
+                CRTparameters={CRTparameters}
             />
             <ParametersDisplay
-                CRT={CRT}
+                CRTparameters={CRTparameters}
             />
             <Instructions
                 instructions={inputData}
                 isAnimationRunning={isAnimationRunning}
                 setIsAnimationRunning={setIsAnimationRunning}
-                // cycle={cycle}
-                // setCycle={setCycle}
-                // Xregister={Xregister}
-                // setXregister={setXregister}
-                // setPixels={setPixels}
-                CRT={CRT}
-                setCRT={setCRT}
+                CRTparameters={CRTparameters}
+                setCRTparameters={setCRTparameters}
             />
         </article>
     )

@@ -1,16 +1,12 @@
-import React from 'react';
-import CRTtypes from './CRTtypes';
+import CRT from './CRTInterface';
 
-interface CRTprops {
-    // X: number;
-    // cycle: number;
-    // display: boolean[];
-    CRT: CRTtypes
+interface CRTDisplayProps {
+    CRTparameters: CRT
 }
 
-export default function CRTdisplay({CRT}: CRTprops) {
+export default function CRTdisplay({CRTparameters}: CRTDisplayProps) {
 
-    const {X, cycle, display} = CRT;
+    const {X, cycle, display} = CRTparameters;
 
     const CRTdisplay = display.map((pixel,index) => {
         let pixelClassName = `crt-pixel`;
