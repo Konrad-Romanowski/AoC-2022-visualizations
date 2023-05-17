@@ -1,19 +1,28 @@
 import React from 'react';
 import AnimationController from '../AnimationController/AnimationController';
-import CRT from './CRT';
+import CRTdisplay from './CRTdisplay';
 import ParametersDisplay from './ParametersDisplay';
 import Instructions from './Instructions';
 import './day10styles.css';
 
 export default function Day10() {
 
+    interface CRTparameters {
+        X: number;
+        cycle: number;
+        display: boolean[];
+    }
+
+    const [CRT,setCRT] = React.useState<CRTparameters>(
+        {
+            X: 1,
+            cycle: 0,
+            display: Array.from({length:240},pixel => false)
+        }
+    );
+
     const [inputData, setInputData] = React.useState<string[]>([]);
     const [isAnimationRunning,setIsAnimationRunning] = React.useState(false);
-    const [Xregister,setXregister] = React.useState(1);
-    const [cycle,setCycle] = React.useState(0);
-    const [pixels, setPixels] = React.useState(()=>{
-        return Array.from({length:240},pixel => false)
-    });
 
     React.useEffect(()=>{
         async function getInputData() {
@@ -32,24 +41,23 @@ export default function Day10() {
                 isAnimationRunning={isAnimationRunning}
                 setIsAnimationRunning={setIsAnimationRunning}
             />
-            <CRT
-                cycle={cycle}
-                Xregister={Xregister}
-                pixels={pixels}
+            <CRTdisplay
+                CRT={CRT}
             />
             <ParametersDisplay
-                cycle={cycle}
-                Xregister={Xregister}
+                CRT={CRT}
             />
             <Instructions
                 instructions={inputData}
                 isAnimationRunning={isAnimationRunning}
                 setIsAnimationRunning={setIsAnimationRunning}
-                cycle={cycle}
-                setCycle={setCycle}
-                Xregister={Xregister}
-                setXregister={setXregister}
-                setPixels={setPixels}
+                // cycle={cycle}
+                // setCycle={setCycle}
+                // Xregister={Xregister}
+                // setXregister={setXregister}
+                // setPixels={setPixels}
+                CRT={CRT}
+                setCRT={setCRT}
             />
         </article>
     )

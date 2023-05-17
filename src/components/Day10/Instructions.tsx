@@ -1,18 +1,19 @@
 import React from "react";
+import CRTtypes from "./CRTtypes"
 
 interface InstructionsProps {
     instructions: string[];
     isAnimationRunning: boolean;
     setIsAnimationRunning: React.Dispatch<React.SetStateAction<boolean>>;
-    cycle: number;
-    setCycle: React.Dispatch<React.SetStateAction<number>>;
-    Xregister:number;
-    setXregister: React.Dispatch<React.SetStateAction<number>>;
-    setPixels: React.Dispatch<React.SetStateAction<boolean[]>>;
+    CRT: CRTtypes;
+    setCRT: React.Dispatch<React.SetStateAction<CRTtypes>>
 }
 
 export default function Instructions(
-    {instructions,isAnimationRunning, setIsAnimationRunning, cycle, setCycle, Xregister, setXregister, setPixels}: InstructionsProps) {
+    {instructions,isAnimationRunning, setIsAnimationRunning, CRT, setCRT}: InstructionsProps)
+{
+
+    const {cycle,X} = CRT;
 
     const [currentInstructionIndex, setCurrentInstructionIndex] = React.useState(0);
 
@@ -21,7 +22,9 @@ export default function Instructions(
         const addCycle = (): Promise<void> => {
             return new Promise<void>((resolve,reject)=>{
                 setTimeout(()=>{
-                    setCycle(prevCycle=>prevCycle+1);
+                    setCRT(prev => {
+                        return {...prev, cycle: prev.cycle+1}
+                    })
                     resolve();
                 },300)
             })
@@ -41,7 +44,9 @@ export default function Instructions(
                 const XregisterUpdate:number = parseInt(instruction.split(" ")[1]);
                 await addCycle();
                 await addCycle();
-                setXregister(prevX=>prevX+XregisterUpdate);
+                setCRT(prev=>{
+                    return {...prev, X: prev.X+1}
+                })
             }
             await getNextInstruction();
         }    
@@ -59,14 +64,15 @@ export default function Instructions(
     },[currentInstructionIndex,isAnimationRunning])
 
     React.useEffect(()=>{
-        if(Math.abs(cycle%40-Xregister)<=1) {
-            setPixels(prevPixels => {
-                const newPixels = [...prevPixels];
-                newPixels[cycle] = true;
-                return newPixels;
+        if(Math.abs(cycle%40-X)<=1) {
+            setCRT(prev => {
+                const newDisplay = [...prev.display];
+                newDisplay[cycle] = true;
+
+                return {...prev, display: newDisplay}
             })
         }
-    },[cycle])
+    },[CRT.cycle])
 
     const highlightedStyle = {
         backgroundColor: "var(--main-theme-color)",
