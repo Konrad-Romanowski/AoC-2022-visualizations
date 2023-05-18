@@ -11,9 +11,9 @@ export default function CRTdisplay({CRTparameters}: CRTDisplayProps) {
     const CRTdisplay = display.map((pixel,index) => {
         let pixelClassName = `crt-pixel`;
         if(cycle === index) pixelClassName = pixelClassName + " active";
-        if(pixel) pixelClassName = pixelClassName + " filled";
+        if(pixel.isOn) pixelClassName = pixelClassName + " filled";
 
-        return <div className={pixelClassName} key={index}></div>
+        return <div className={pixelClassName} key={pixel.id}></div>
     });
 
     const spriteStyle = {

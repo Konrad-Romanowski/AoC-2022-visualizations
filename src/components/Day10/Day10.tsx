@@ -5,6 +5,7 @@ import ParametersDisplay from './ParametersDisplay';
 import Instructions from './Instructions';
 import './day10styles.css';
 import CRT from './CRTInterface';
+import { nanoid } from 'nanoid';
 
 export default function Day10() {
 
@@ -12,7 +13,9 @@ export default function Day10() {
         {
             X: 1,
             cycle: 0,
-            display: Array.from({length:240},pixel => false)
+            display: Array.from({length:240},pixel => {
+                return {id: nanoid(), isOn: false}
+            })
         }
     );
 

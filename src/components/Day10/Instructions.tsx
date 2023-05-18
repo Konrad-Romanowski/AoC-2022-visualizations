@@ -1,5 +1,6 @@
 import React from 'react';
-import CRT from './CRTInterface'
+import CRT from './CRTInterface';
+import { nanoid } from 'nanoid';
 
 interface InstructionsProps {
     instructions: string[];
@@ -66,12 +67,11 @@ export default function Instructions(
         if(Math.abs(cycle%40-X)<=1) {
             setCRTparameters(prev => {
                 const newDisplay = [...prev.display];
-                newDisplay[cycle] = true;
-
+                newDisplay[cycle].isOn = true;
                 return {...prev, display: newDisplay}
             })
         }
-    },[CRTparameters])
+    },[CRTparameters.cycle])
 
     const highlightedStyle = {
         backgroundColor: "var(--main-theme-color)",
@@ -80,7 +80,7 @@ export default function Instructions(
     }
 
     const instructionsElements = instructions.map((instruction,index) => 
-        <li key={index} style={index === currentInstructionIndex ? highlightedStyle : {}}>{instruction}</li>)
+        <li key={nanoid()} style={index === currentInstructionIndex ? highlightedStyle : {}}>{instruction}</li>)
 
     return (
         <ul className="instructions">
