@@ -5,6 +5,7 @@ import ParametersDisplay from './ParametersDisplay';
 import Instructions from './Instructions';
 import './day10styles.css';
 import CRT from './CRTInterface';
+import Animation from '../AnimationController/AnimationInterface';
 import { nanoid } from 'nanoid';
 
 export default function Day10() {
@@ -20,7 +21,12 @@ export default function Day10() {
     );
 
     const [inputData, setInputData] = React.useState<string[]>([]);
-    const [isAnimationRunning,setIsAnimationRunning] = React.useState(false);
+    const [animationState,setAnimationState] = React.useState<Animation>(
+        {
+            isRunning: false,
+            isCompleted: false,
+        }
+    )
 
     React.useEffect(()=>{
         async function getInputData() {
@@ -36,8 +42,8 @@ export default function Day10() {
         <article>
             <header className='sub-header'>Day 10 part 2 visualization</header>
             <AnimationController
-                isAnimationRunning={isAnimationRunning}
-                setIsAnimationRunning={setIsAnimationRunning}
+                animationState={animationState}
+                setAnimationState={setAnimationState}
             />
             <CRTdisplay
                 CRTparameters={CRTparameters}
@@ -47,8 +53,8 @@ export default function Day10() {
             />
             <Instructions
                 instructions={inputData}
-                isAnimationRunning={isAnimationRunning}
-                setIsAnimationRunning={setIsAnimationRunning}
+                animationState={animationState}
+                setAnimationState={setAnimationState}
                 CRTparameters={CRTparameters}
                 setCRTparameters={setCRTparameters}
             />

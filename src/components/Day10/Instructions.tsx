@@ -1,17 +1,18 @@
 import React from 'react';
 import CRT from './CRTInterface';
+import Animation from '../AnimationController/AnimationInterface';
 import { nanoid } from 'nanoid';
 
 interface InstructionsProps {
     instructions: string[];
-    isAnimationRunning: boolean;
-    setIsAnimationRunning: React.Dispatch<React.SetStateAction<boolean>>;
+    animationState: Animation;
+    setAnimationState: React.Dispatch<React.SetStateAction<Animation>>;
     CRTparameters: CRT;
     setCRTparameters: React.Dispatch<React.SetStateAction<CRT>>
 }
 
 export default function Instructions(
-    {instructions,isAnimationRunning, setIsAnimationRunning, CRTparameters, setCRTparameters}: InstructionsProps)
+    {instructions,animationState, setAnimationState, CRTparameters, setCRTparameters}: InstructionsProps)
 {
 
     const [currentInstructionIndex, setCurrentInstructionIndex] = React.useState(0);
@@ -51,17 +52,19 @@ export default function Instructions(
             await getNextInstruction();
         }    
 
-        if(isAnimationRunning && currentInstructionIndex < instructions.length) {
+        if(animationState.isRunning && currentInstructionIndex < instructions.length) {
             const currentInstruction = instructions[currentInstructionIndex];
             readInstruction(currentInstruction);
         }
 
         if(currentInstructionIndex >= instructions.length) {
-            setIsAnimationRunning(false);
+            setAnimationState(prevState => {
+                return {...prevState, isRunning: false, isCompleted: true}
+            });
             //set start-stop controller button inactive
         }
 
-    },[currentInstructionIndex,isAnimationRunning])
+    },[currentInstructionIndex,animationState.isRunning, animationState.isCompleted])
 
     React.useEffect(()=>{
         if(Math.abs(cycle%40-X)<=1) {

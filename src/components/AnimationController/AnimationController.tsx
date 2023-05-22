@@ -1,20 +1,25 @@
-import React from "react";
-import "./animationController.css";
+import React from 'react';
+import './animationController.css';
+import Animation from './AnimationInterface'
 
 interface animationControllerProps {
-    isAnimationRunning: boolean;
-    setIsAnimationRunning: React.Dispatch<React.SetStateAction<boolean>>;
+    animationState: Animation;
+    setAnimationState: React.Dispatch<React.SetStateAction<Animation>>;
 }
 
-export default function AnimationController({isAnimationRunning, setIsAnimationRunning}:animationControllerProps) {
+export default function AnimationController({animationState, setAnimationState}:animationControllerProps) {
+
+    const {isRunning} = animationState;
 
     function handleClick() {
-        setIsAnimationRunning(prevState=>!prevState);
+        setAnimationState(prevState => {
+            return { ...prevState, isRunning: !prevState.isRunning}
+        });
     }
 
     return (
         <section className="controllers">
-            <button onClick={handleClick}>{isAnimationRunning ? "Stop" : "Start"}</button>
+            <button onClick={handleClick}>{isRunning ? "Stop" : "Start"}</button>
         </section>
     )
 }
