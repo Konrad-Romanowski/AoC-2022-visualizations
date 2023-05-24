@@ -9,8 +9,6 @@ interface animationControllerProps {
 
 export default function AnimationController({animationState, setAnimationState}:animationControllerProps) {
 
-    const {isRunning} = animationState;
-
     function handleClick() {
         setAnimationState(prevState => {
             return { ...prevState, isRunning: !prevState.isRunning}
@@ -19,7 +17,7 @@ export default function AnimationController({animationState, setAnimationState}:
 
     return (
         <section className="controllers">
-            <button onClick={handleClick}>{isRunning ? "Stop" : "Start"}</button>
+            <button onClick={handleClick}>{animationState.isRunning ? "Stop" : "Start"}</button>
         </section>
     )
 }
