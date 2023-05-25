@@ -4,8 +4,9 @@ import CRTdisplay from './CRTdisplay';
 import ParametersDisplay from './ParametersDisplay';
 import Instructions from './Instructions';
 import './day10styles.css';
-import CRTInterface from './CRTInterface';
 import AnimationInterface from '../AnimationController/AnimationInterface';
+import CRTInterface from './CRTInterface';
+import InstructionInterface from './InstructionInterface';
 import { nanoid } from 'nanoid';
 
 export default function Day10() {
@@ -20,7 +21,7 @@ export default function Day10() {
         }
     );
 
-    const [inputData, setInputData] = React.useState<string[]>([]);
+    const [instructions, setInstructions] = React.useState<InstructionInterface[]>([]);
     const [animation,setAnimation] = React.useState<AnimationInterface>(
         {
             isRunning: false,
@@ -29,13 +30,16 @@ export default function Day10() {
     )
 
     React.useEffect(()=>{
-        async function getInputData() {
+        async function getInstructionsFromInputData() {
             const response = await fetch('./day10_input.txt');
             const data = await response.text();
-            setInputData(data.split("\n"));
+            const instructions = data.split("\n").map(dataItem => {
+                return {id: nanoid(), instruction: dataItem}
+            })
+            setInstructions(instructions);
         }
 
-        getInputData();
+        getInstructionsFromInputData();
     },[]);
 
     return (
@@ -52,7 +56,7 @@ export default function Day10() {
                 CRT={CRT}
             />
             <Instructions
-                instructions={inputData}
+                instructions={instructions}
                 animation={animation}
                 setAnimation={setAnimation}
                 CRT={CRT}

@@ -1,10 +1,10 @@
 import React from 'react';
 import CRTInterface from './CRTInterface';
+import InstructionInterface from './InstructionInterface';
 import AnimationInterface from '../AnimationController/AnimationInterface';
-import { nanoid } from 'nanoid';
 
 interface InstructionsProps {
-    instructions: string[];
+    instructions: InstructionInterface[];
     animation: AnimationInterface;
     setAnimation: React.Dispatch<React.SetStateAction<AnimationInterface>>;
     CRT: CRTInterface;
@@ -54,7 +54,7 @@ export default function Instructions(
 
         if(animation.isRunning && currentInstructionIndex < instructions.length) {
             const currentInstruction = instructions[currentInstructionIndex];
-            readInstruction(currentInstruction);
+            readInstruction(currentInstruction.instruction);
         }
 
         if(currentInstructionIndex >= instructions.length) {
@@ -83,7 +83,7 @@ export default function Instructions(
     }
 
     const instructionsElements = instructions.map((instruction,index) => 
-        <li key={nanoid()} style={index === currentInstructionIndex ? highlightedStyle : {}}>{instruction}</li>)
+        <li key={instruction.id} style={index === currentInstructionIndex ? highlightedStyle : {}}>{instruction.instruction}</li>)
 
     return (
         <ul className="instructions">
