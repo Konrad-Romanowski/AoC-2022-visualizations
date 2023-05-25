@@ -1,30 +1,30 @@
 import React from 'react';
-import CRT from './CRTInterface';
-import Animation from '../AnimationController/AnimationInterface';
+import CRTInterface from './CRTInterface';
+import AnimationInterface from '../AnimationController/AnimationInterface';
 import { nanoid } from 'nanoid';
 
 interface InstructionsProps {
     instructions: string[];
-    animationState: Animation;
-    setAnimationState: React.Dispatch<React.SetStateAction<Animation>>;
-    CRTparameters: CRT;
-    setCRTparameters: React.Dispatch<React.SetStateAction<CRT>>
+    animation: AnimationInterface;
+    setAnimation: React.Dispatch<React.SetStateAction<AnimationInterface>>;
+    CRT: CRTInterface;
+    setCRT: React.Dispatch<React.SetStateAction<CRTInterface>>
 }
 
 export default function Instructions(
-    {instructions,animationState, setAnimationState, CRTparameters, setCRTparameters}: InstructionsProps)
+    {instructions, animation, setAnimation, CRT, setCRT}: InstructionsProps)
 {
 
     const [currentInstructionIndex, setCurrentInstructionIndex] = React.useState(0);
-    const {cycle,X} = CRTparameters;
+    const {cycle,X} = CRT;
 
     React.useEffect(()=>{
 
         const addCycle = (): Promise<void> => {
             return new Promise<void>((resolve,reject)=>{
                 setTimeout(()=>{
-                    setCRTparameters(prev => {
-                        return {...prev, cycle: prev.cycle+1}
+                    setCRT(prevState => {
+                        return {...prevState, cycle: prevState.cycle+1}
                     })
                     resolve();
                 },300)
@@ -45,36 +45,36 @@ export default function Instructions(
                 const XregisterUpdate:number = parseInt(instruction.split(" ")[1]);
                 await addCycle();
                 await addCycle();
-                setCRTparameters(prev=>{
-                    return {...prev, X: prev.X + XregisterUpdate}
-                })
+                setCRT(prevState=>{
+                    return {...prevState, X: prevState.X + XregisterUpdate}
+                });
             }
             await getNextInstruction();
-        }    
+        }
 
-        if(animationState.isRunning && currentInstructionIndex < instructions.length) {
+        if(animation.isRunning && currentInstructionIndex < instructions.length) {
             const currentInstruction = instructions[currentInstructionIndex];
             readInstruction(currentInstruction);
         }
 
         if(currentInstructionIndex >= instructions.length) {
-            setAnimationState(prevState => {
+            setAnimation(prevState => {
                 return {...prevState, isRunning: false, isCompleted: true}
             });
             //set start-stop controller button inactive
         }
 
-    },[currentInstructionIndex,animationState.isRunning, animationState.isCompleted])
+    },[currentInstructionIndex,animation.isRunning, animation.isCompleted])
 
     React.useEffect(()=>{
         if(Math.abs(cycle%40-X)<=1) {
-            setCRTparameters(prev => {
-                const newDisplay = [...prev.display];
+            setCRT(prevState => {
+                const newDisplay = [...prevState.display];
                 newDisplay[cycle].isOn = true;
-                return {...prev, display: newDisplay}
+                return {...prevState, display: newDisplay}
             })
         }
-    },[CRTparameters.cycle])
+    },[CRT.cycle])
 
     const highlightedStyle = {
         backgroundColor: "var(--main-theme-color)",

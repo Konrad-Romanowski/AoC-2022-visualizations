@@ -1,12 +1,12 @@
-import CRT from './CRTInterface';
+import CRTInterface from './CRTInterface';
 
 interface CRTDisplayProps {
-    CRTparameters: CRT
+    CRT: CRTInterface
 }
 
-export default function CRTdisplay({CRTparameters}: CRTDisplayProps) {
+export default function CRTdisplay({CRT}: CRTDisplayProps) {
 
-    const {X, cycle, display} = CRTparameters;
+    const {X, cycle, display} = CRT;
 
     const CRTdisplay = display.map((pixel,index) => {
         let pixelClassName = `crt-pixel`;

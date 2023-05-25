@@ -4,13 +4,13 @@ import CRTdisplay from './CRTdisplay';
 import ParametersDisplay from './ParametersDisplay';
 import Instructions from './Instructions';
 import './day10styles.css';
-import CRT from './CRTInterface';
-import Animation from '../AnimationController/AnimationInterface';
+import CRTInterface from './CRTInterface';
+import AnimationInterface from '../AnimationController/AnimationInterface';
 import { nanoid } from 'nanoid';
 
 export default function Day10() {
 
-    const [CRTparameters,setCRTparameters] = React.useState<CRT>(
+    const [CRT,setCRT] = React.useState<CRTInterface>(
         {
             X: 1,
             cycle: 0,
@@ -21,7 +21,7 @@ export default function Day10() {
     );
 
     const [inputData, setInputData] = React.useState<string[]>([]);
-    const [animationState,setAnimationState] = React.useState<Animation>(
+    const [animation,setAnimation] = React.useState<AnimationInterface>(
         {
             isRunning: false,
             isCompleted: false,
@@ -42,21 +42,21 @@ export default function Day10() {
         <article>
             <header className='sub-header'>Day 10 part 2 visualization</header>
             <AnimationController
-                animationState={animationState}
-                setAnimationState={setAnimationState}
+                animation={animation}
+                setAnimation={setAnimation}
             />
             <CRTdisplay
-                CRTparameters={CRTparameters}
+                CRT={CRT}
             />
             <ParametersDisplay
-                CRTparameters={CRTparameters}
+                CRT={CRT}
             />
             <Instructions
                 instructions={inputData}
-                animationState={animationState}
-                setAnimationState={setAnimationState}
-                CRTparameters={CRTparameters}
-                setCRTparameters={setCRTparameters}
+                animation={animation}
+                setAnimation={setAnimation}
+                CRT={CRT}
+                setCRT={setCRT}
             />
         </article>
     )

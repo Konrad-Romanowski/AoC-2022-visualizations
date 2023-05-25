@@ -1,4 +1,4 @@
-export default interface Animation {
+export default interface AnimationInterface {
     isRunning: boolean;
     isCompleted: boolean;
 }
