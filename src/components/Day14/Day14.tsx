@@ -2,7 +2,8 @@ import React from 'react';
 import AnimationController from '../AnimationController/AnimationController';
 import AnimationInterface from '../AnimationController/AnimationInterface';
 import generateMap from './generateMap';
-
+import Canvas from './Canvas';
+import './day14styles.css';
 
 export default function Day14() {
 
@@ -72,6 +73,10 @@ export default function Day14() {
             <AnimationController 
                 animation={animation}
                 setAnimation={setAnimation}
+            />
+            <Canvas
+                rockPath={rockPath}
+                floorLevel={floorLevel}
             />
         </>
     )
