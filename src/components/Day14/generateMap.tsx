@@ -24,7 +24,7 @@ function drawPath(map:GameMap,p1:Point,p2:Point) {
         const yEnd = Math.max(p1.y,p2.y);
 
         for(let i = yStart; i <= yEnd; i++) {
-            map.hasOwnProperty(`${p1.x},${i}`) ? null : map[`${p1.x},${i}`] = '#';
+            map.hasOwnProperty(`[${p1.x},${i}]`) ? null : map[`[${p1.x},${i}]`] = '#';
         }
     }
 
@@ -34,7 +34,7 @@ function drawPath(map:GameMap,p1:Point,p2:Point) {
         const xEnd = Math.max(p1.x,p2.x);
 
         for(let i = xStart; i <= xEnd; i++) {
-            map.hasOwnProperty(`${i},${p1.y}`) ? null : map[`${i},${p2.y}`] = '#';
+            map.hasOwnProperty(`[${i},${p1.y}]`) ? null : map[`[${i},${p2.y}]`] = '#';
         }
     }
 }
