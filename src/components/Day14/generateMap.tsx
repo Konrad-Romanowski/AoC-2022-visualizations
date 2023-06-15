@@ -1,9 +1,4 @@
-interface GameMap {
-    [key: string]: string;
-}
-
-// move Point type to separate file?
-type Point = {x: number, y: number};
+import { Point, GameMap } from './day14Types';
 
 export default function generateMap(rockPaths:Array<Point[]>) {
     const map:GameMap = {}

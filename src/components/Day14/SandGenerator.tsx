@@ -1,10 +1,8 @@
 // PROBABLY NOT THE BEST PRACTICE TO USE CLASSES IN REACT THAT ARE NOT MEANT TO BE A COMPONENT
 
-import AnimationInterface from './../AnimationController/AnimationInterface';
+import { GameMap } from './day14Types';
 
-interface GameMap {
-    [key: string]: string;
-}
+import AnimationInterface from './../AnimationController/AnimationInterface';
 
 export default class SandGenerator {
     x: number;

@@ -4,23 +4,16 @@ import AnimationInterface from '../AnimationController/AnimationInterface';
 import generateMap from './generateMap';
 import Canvas from './Canvas';
 import './day14styles.css';
+import { Point, GameMap } from './day14Types';
 
 export default function Day14() {
-
-    // move Point type to separate file?
-    type Point = {x: number, y: number};
-
     const [animation, setAnimation] = React.useState<AnimationInterface>({
         isRunning: false,
         isCompleted: false,
     });
 
-    interface GameMap {
-        [key: string]: string;
-    }
-
     // initial state for useReducer
-    const sandInitialState = {x:500,y:0}
+    const sandInitialState = {x:500, y:0}
 
     // action types for useReducer
     const enum REDUCER_ACTION_TYPE {
@@ -49,9 +42,9 @@ export default function Day14() {
             case REDUCER_ACTION_TYPE.MERGE_TO_MAP:
                 {
                     // is it legal?
-                    setMap(prevMap=>{
+                    setMap(prevMap => {
                         return {...prevMap, [`[${state.x},${state.y}]`]: 'o'}
-                    })
+                    });
                     return sandInitialState;
                 }
             default:
@@ -109,16 +102,31 @@ export default function Day14() {
         // console.log(map);
     },[rockPath]);
 
-    // what should be the dependency array
     React.useEffect(()=>{
-        // const currentSand = sandGenerator.generateSand();
-        updateSand({type: REDUCER_ACTION_TYPE.CREATE_NEW_SAND});
-    },[map])
+        // while(!animation.isCompleted && animation.isRunning) {
+        //     if(!map[`[${sand.x},${sand.y+1}]`] && sand.y+1 !== floorLevel) {
+        //         updateSand({type:REDUCER_ACTION_TYPE.MOVE_DOWN});
+        //     } else if(!map[`[${sand.x-1},${sand.y+1}]`] && sand.y+1 !== floorLevel) {
+        //         updateSand({type:REDUCER_ACTION_TYPE.MOVE_DOWN_LEFT});
+        //     } else if(!map[`[${sand.x+1},${sand.y+1}]`] && sand.y+1 !== floorLevel) {
+        //         updateSand({type:REDUCER_ACTION_TYPE.MOVE_DOWN_RIGHT});
+        //     } else {
+        //         updateSand({type:REDUCER_ACTION_TYPE.MERGE_TO_MAP});
+        //     }
+        // }
+
+    },[animation.isRunning, animation.isCompleted]);
+
+    // what should be the dependency array
+    // React.useEffect(()=>{
+    //     // const currentSand = sandGenerator.generateSand();
+    //     updateSand({type: REDUCER_ACTION_TYPE.CREATE_NEW_SAND});
+    // },[map]);
 
     // 
-    React.useEffect(()=>{
+    // React.useEffect(()=>{
 
-    },[sand]);
+    // },[sand]);
 
     return (
         <>

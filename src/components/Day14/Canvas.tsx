@@ -1,8 +1,5 @@
 import React from 'react';
-
-interface GameMap {
-    [key: string]: string;
-}
+import { GameMap } from './day14Types';
 
 interface CanvasProps {
     floorLevel: number;
