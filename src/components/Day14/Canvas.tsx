@@ -35,7 +35,7 @@ export default function Canvas({map,floorLevel}:CanvasProps) {
         }
 
         //draw floor
-        ctx.strokeStyle = 'red';
+        ctx.fillStyle = 'red';
         ctx.fillRect(0,floorLevel,width,1);
 
         //draw sand generator

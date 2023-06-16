@@ -13,7 +13,7 @@ export default function Day14() {
     });
 
     // initial state for useReducer
-    const sandInitialState = {x:500, y:0}
+    const sandInitialState = {x:500, y:0, canMove: true}
 
     // action types for useReducer
     const enum REDUCER_ACTION_TYPE {
@@ -21,7 +21,7 @@ export default function Day14() {
         MOVE_DOWN,
         MOVE_DOWN_LEFT,
         MOVE_DOWN_RIGHT,
-        MERGE_TO_MAP
+        TOGGLE_MOVE
     }
 
     type ReducerAction = {
@@ -36,17 +36,11 @@ export default function Day14() {
             case REDUCER_ACTION_TYPE.MOVE_DOWN:
                 return {...state, y: state.y+1}
             case REDUCER_ACTION_TYPE.MOVE_DOWN_LEFT:
-                return {x: state.x-1, y: state.y+1}
+                return {...state, x: state.x-1, y: state.y+1}
             case REDUCER_ACTION_TYPE.MOVE_DOWN_RIGHT:
-                return {x: state.x+1, y: state.y+1}
-            case REDUCER_ACTION_TYPE.MERGE_TO_MAP:
-                {
-                    // is it legal?
-                    setMap(prevMap => {
-                        return {...prevMap, [`[${state.x},${state.y}]`]: 'o'}
-                    });
-                    return sandInitialState;
-                }
+                return {...state, x: state.x+1, y: state.y+1}
+            case REDUCER_ACTION_TYPE.TOGGLE_MOVE:
+                return {...state, canMove: false};
             default:
                 throw new Error();
         }
@@ -56,11 +50,13 @@ export default function Day14() {
     const [floorLevel,setFloorLevel] = React.useState<number>(0);
     const [map, setMap] = React.useState<GameMap>({});
 
-    const [sand, updateSand] = React.useReducer(sandReducer,sandInitialState);
+    const [sand, sandDispatch] = React.useReducer(sandReducer,sandInitialState);
     
     // REMOVE LATER
-    // console.log(rockPath);
+    // console.log(Object.keys(map).length);
+    // console.log(map);
     // console.log(floorLevel);
+    // console.log(sand);
 
     // read day14_input.txt and transform data into more readable / useful structure
     // and by the way get the lowest rock level and set the floor level
@@ -98,35 +94,33 @@ export default function Day14() {
     // Generate map with rock obstacles
     React.useEffect(()=>{
         setMap(generateMap(rockPath));
-        //REMOVE LATER
-        // console.log(map);
     },[rockPath]);
 
     React.useEffect(()=>{
-        // while(!animation.isCompleted && animation.isRunning) {
-        //     if(!map[`[${sand.x},${sand.y+1}]`] && sand.y+1 !== floorLevel) {
-        //         updateSand({type:REDUCER_ACTION_TYPE.MOVE_DOWN});
-        //     } else if(!map[`[${sand.x-1},${sand.y+1}]`] && sand.y+1 !== floorLevel) {
-        //         updateSand({type:REDUCER_ACTION_TYPE.MOVE_DOWN_LEFT});
-        //     } else if(!map[`[${sand.x+1},${sand.y+1}]`] && sand.y+1 !== floorLevel) {
-        //         updateSand({type:REDUCER_ACTION_TYPE.MOVE_DOWN_RIGHT});
-        //     } else {
-        //         updateSand({type:REDUCER_ACTION_TYPE.MERGE_TO_MAP});
-        //     }
-        // }
+        if(!sand.canMove) {
+            setMap(prevMap => {
+                return {...prevMap, [`[${sand.x},${sand.y}]`]: 'o'}
+            });
+            sandDispatch({type:REDUCER_ACTION_TYPE.CREATE_NEW_SAND});
+        }
+    },[sand.canMove]);
 
-    },[animation.isRunning, animation.isCompleted]);
-
-    // what should be the dependency array
-    // React.useEffect(()=>{
-    //     // const currentSand = sandGenerator.generateSand();
-    //     updateSand({type: REDUCER_ACTION_TYPE.CREATE_NEW_SAND});
-    // },[map]);
-
-    // 
-    // React.useEffect(()=>{
-
-    // },[sand]);
+    React.useEffect(()=>{
+        if(!animation.isCompleted && animation.isRunning) {
+            if(sand.x === 500 && sand.y === 0 && !sand.canMove) {
+                setAnimation({isRunning: false, isCompleted: true})
+            }
+            if(!map[`[${sand.x},${sand.y+1}]`] && sand.y+1 !== floorLevel) {
+                sandDispatch({type:REDUCER_ACTION_TYPE.MOVE_DOWN});
+            } else if(!map[`[${sand.x-1},${sand.y+1}]`] && sand.y+1 !== floorLevel) {
+                sandDispatch({type:REDUCER_ACTION_TYPE.MOVE_DOWN_LEFT});
+            } else if(!map[`[${sand.x+1},${sand.y+1}]`] && sand.y+1 !== floorLevel) {
+                sandDispatch({type:REDUCER_ACTION_TYPE.MOVE_DOWN_RIGHT});
+            } else {
+                sandDispatch({type:REDUCER_ACTION_TYPE.TOGGLE_MOVE});
+            }
+        }
+    },[animation.isRunning, animation.isCompleted, sand.y]);
 
     return (
         <>
