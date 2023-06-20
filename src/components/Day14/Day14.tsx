@@ -3,6 +3,7 @@ import AnimationController from '../AnimationController/AnimationController';
 import AnimationInterface from '../AnimationController/AnimationInterface';
 import generateMap from './generateMap';
 import Canvas from './Canvas';
+import SandCounter from './SandCounter';
 import './day14styles.css';
 import { Point, GameMap } from './day14Types';
 
@@ -13,7 +14,7 @@ export default function Day14() {
     });
 
     // initial state for useReducer
-    const sandInitialState = {x:500, y:0, canMove: true}
+    const sandInitialState = {x:500, y:0, canMove: true, sandCounter: 0}
 
     // action types for useReducer
     const enum REDUCER_ACTION_TYPE {
@@ -32,7 +33,7 @@ export default function Day14() {
     const sandReducer = (state: typeof sandInitialState, action:ReducerAction): typeof sandInitialState => {
         switch(action.type) {
             case REDUCER_ACTION_TYPE.CREATE_NEW_SAND:
-                return sandInitialState;
+                return {...sandInitialState, sandCounter: state.sandCounter+1};
             case REDUCER_ACTION_TYPE.MOVE_DOWN:
                 return {...state, y: state.y+1}
             case REDUCER_ACTION_TYPE.MOVE_DOWN_LEFT:
@@ -123,7 +124,7 @@ export default function Day14() {
     },[animation.isRunning, animation.isCompleted, sand.y]);
 
     return (
-        <>
+        <article>
             <header className='sub-header'>Day 14 part 2 visualization</header>
             <AnimationController 
                 animation={animation}
@@ -133,6 +134,7 @@ export default function Day14() {
                 map={map}
                 floorLevel={floorLevel}
             />
-        </>
+            <SandCounter sandCounter={sand.sandCounter} />
+        </article>
     )
 }

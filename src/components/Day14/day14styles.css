@@ -3,3 +3,17 @@
     justify-content: center;
     margin: 1.5rem 0;
 }
+
+.sand-counter-container {
+    display: flex;
+    justify-content: center;
+    color: white;
+    margin-bottom: 1.5rem;
+}
+
+.sand-counter-container > span {
+    background-color: var(--main-theme-color);
+    border-radius: 2rem;
+    text-align: center;
+    padding: .5rem 1.5rem;
+}
