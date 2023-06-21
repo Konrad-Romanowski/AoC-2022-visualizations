@@ -66,7 +66,7 @@ export default function Day14() {
         async function getRockPaths() {
             const response = await fetch('./day14_input.txt');
             const data = await response.text();
-            const solidRockPathsInput = data.split('\r\n');
+            const solidRockPathsInput = data.split('\n');
 
             let lowestRocksLevel = -Infinity;
 
