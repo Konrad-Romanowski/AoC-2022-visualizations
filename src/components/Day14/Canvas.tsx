@@ -1,15 +1,19 @@
 import React from 'react';
-import { GameMap } from './day14Types';
+import { Point, GameMap } from './day14Types';
 
 interface CanvasProps {
     floorLevel: number;
+    sandGenerator: Point;
     map: GameMap;
 }
 
-export default function Canvas({map,floorLevel}:CanvasProps) {
+export default function Canvas({map,sandGenerator,floorLevel}:CanvasProps) {
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
     const width = 800;
-    const height = 300;
+    const height = 400;
+
+    const translationVector = {x: -600, y:0};
+    const scale = 2;
     
     React.useEffect(()=>{
         const canvas = canvasRef.current;
@@ -24,23 +28,24 @@ export default function Canvas({map,floorLevel}:CanvasProps) {
 
         // draw rocks and sand from map
         for(let point in map) {
-            const x = JSON.parse(point)[0];
-            const y = JSON.parse(point)[1];
+            const x = JSON.parse(point)[0]*scale + translationVector.x;
+            const y = JSON.parse(point)[1]*scale + translationVector.y;
             if(map[point] === "#") {
-                ctx.fillStyle = 'red';
+                ctx.fillStyle = 'black';
             } else {
-                ctx.fillStyle = 'orange';
+                ctx.fillStyle = 'gold';
             }
-            ctx.fillRect(x,y,1,1);
+            ctx.fillRect(x,y,1*scale,1*scale);
         }
 
         //draw floor
-        ctx.fillStyle = 'red';
-        ctx.fillRect(0,floorLevel,width,1);
+        ctx.fillStyle = 'black';
+        ctx.fillRect(0+translationVector.x,floorLevel*scale+translationVector.y,width*scale,1*scale);
 
-        //draw sand generator
-        ctx.fillStyle = 'green'
-        ctx.fillRect(500,0,1,1);
+        // draw sand generator
+        ctx.fillStyle = 'red';
+        ctx.fillRect(sandGenerator.x+(sandGenerator.x+translationVector.x),sandGenerator.y+(sandGenerator.y+translationVector.y),1*scale,1*scale);
+
     },[map]);
 
     return (

@@ -13,8 +13,11 @@ export default function Day14() {
         isCompleted: false,
     });
 
+    // sand generator position
+    const sandGenerator:Point = {x:500, y:0};
+
     // initial state for useReducer
-    const sandInitialState = {x:500, y:0, canMove: true, sandCounter: 0}
+    const sandInitialState = {x:sandGenerator.x, y:sandGenerator.y, canMove: true, sandCounter: 0}
 
     // action types for useReducer
     const enum REDUCER_ACTION_TYPE {
@@ -52,12 +55,6 @@ export default function Day14() {
     const [map, setMap] = React.useState<GameMap>({});
 
     const [sand, sandDispatch] = React.useReducer(sandReducer,sandInitialState);
-    
-    // REMOVE LATER
-    // console.log(Object.keys(map).length);
-    // console.log(map);
-    // console.log(floorLevel);
-    // console.log(sand);
 
     // read day14_input.txt and transform data into more readable / useful structure
     // and by the way get the lowest rock level and set the floor level
@@ -132,6 +129,7 @@ export default function Day14() {
             />
             <Canvas
                 map={map}
+                sandGenerator={sandGenerator}
                 floorLevel={floorLevel}
             />
             <SandCounter sandCounter={sand.sandCounter} />
