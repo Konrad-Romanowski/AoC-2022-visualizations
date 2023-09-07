@@ -8,6 +8,7 @@ import AnimationInterface from '../AnimationController/AnimationInterface';
 import CRTInterface from './CRTInterface';
 import InstructionInterface from './InstructionInterface';
 import { nanoid } from 'nanoid';
+import useFetch from '../../hooks/useFetch';
 
 export default function Day10() {
 
@@ -20,27 +21,21 @@ export default function Day10() {
             })
         }
     );
-
     const [instructions, setInstructions] = React.useState<InstructionInterface[]>([]);
     const [animation,setAnimation] = React.useState<AnimationInterface>(
         {
             isRunning: false,
             isCompleted: false,
         }
-    )
+    );
+    const {inputData,isPending,isError} = useFetch('./day10_input.txt');
 
     React.useEffect(()=>{
-        async function getInstructionsFromInputData() {
-            const response = await fetch('./day10_input.txt');
-            const data = await response.text();
-            const instructions = data.split("\n").map(dataItem => {
-                return {id: nanoid(), instruction: dataItem}
-            })
-            setInstructions(instructions);
-        }
-
-        getInstructionsFromInputData();
-    },[]);
+        const instructions = inputData.split("\n").map(dataItem => {
+            return {id: nanoid(), instruction: dataItem}
+        });
+        setInstructions(instructions);
+    },[inputData]);
 
     return (
         <article>

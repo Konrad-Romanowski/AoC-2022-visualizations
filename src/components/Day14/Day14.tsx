@@ -6,6 +6,7 @@ import Canvas from './Canvas';
 import SandCounter from './SandCounter';
 import './day14styles.css';
 import { Point, GameMap } from './day14Types';
+import useFetch from '../../hooks/useFetch';
 
 export default function Day14() {
     const [animation, setAnimation] = React.useState<AnimationInterface>({
@@ -53,41 +54,35 @@ export default function Day14() {
     const [rockPath, setRockPath] = React.useState<Array<Point[]>>([]);
     const [floorLevel,setFloorLevel] = React.useState<number>(0);
     const [map, setMap] = React.useState<GameMap>({});
-
     const [sand, sandDispatch] = React.useReducer(sandReducer,sandInitialState);
+    const {inputData,isPending,isError} = useFetch('./day14_input.txt');
 
-    // read day14_input.txt and transform data into more readable / useful structure
+    // transform input data into more readable / useful structure
     // and by the way get the lowest rock level and set the floor level
     React.useEffect(()=>{
+        const solidRockPathsInput = inputData.split('\n');
 
-        async function getRockPaths() {
-            const response = await fetch('./day14_input.txt');
-            const data = await response.text();
-            const solidRockPathsInput = data.split('\n');
+        let lowestRocksLevel = -Infinity;
 
-            let lowestRocksLevel = -Infinity;
-
-            const solidRockPaths = solidRockPathsInput.reduce((rockPaths:Array<Point[]>,path:string)=>{
-                const pathAsArray = path.split(' -> ');
-                const singlePath = pathAsArray.reduce((points:Array<Point>,point:string)=>{
-                    const pointCoordinates = point.split(',');
-                    const x = parseInt(pointCoordinates[0]);
-                    const y = parseInt(pointCoordinates[1]);
-                    lowestRocksLevel = Math.max(lowestRocksLevel, y);
-                    points.push({x, y});
-                    return points;
-                },[]);
-
-                rockPaths.push(singlePath);
-                return rockPaths;
+        const solidRockPaths = solidRockPathsInput.reduce((rockPaths:Array<Point[]>,path:string)=>{
+            const pathAsArray = path.split(' -> ');
+            const singlePath = pathAsArray.reduce((points:Array<Point>,point:string)=>{
+                const pointCoordinates = point.split(',');
+                const x = parseInt(pointCoordinates[0]);
+                const y = parseInt(pointCoordinates[1]);
+                lowestRocksLevel = Math.max(lowestRocksLevel, y);
+                points.push({x, y});
+                return points;
             },[]);
-            
-            setFloorLevel(lowestRocksLevel+2);
-            setRockPath(solidRockPaths);
-        }
 
-        getRockPaths();
-    },[]);
+            rockPaths.push(singlePath);
+            return rockPaths;
+        },[]);
+        
+        setFloorLevel(lowestRocksLevel+2);
+        setRockPath(solidRockPaths);
+
+    },[inputData]);
 
     // Generate map with rock obstacles
     React.useEffect(()=>{
