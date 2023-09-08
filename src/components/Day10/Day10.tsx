@@ -9,6 +9,8 @@ import CRTInterface from './CRTInterface';
 import InstructionInterface from './InstructionInterface';
 import { nanoid } from 'nanoid';
 import useFetch from '../../hooks/useFetch';
+import ErrorAlert from '../ErrorAlert/ErrorAlert';
+import PendingDisplay from '../PendingDisplay/PendingDisplay';
 
 export default function Day10() {
 
@@ -40,23 +42,29 @@ export default function Day10() {
     return (
         <article>
             <header className='sub-header'>Day 10 part 2 visualization</header>
-            <AnimationController
-                animation={animation}
-                setAnimation={setAnimation}
-            />
-            <CRTdisplay
-                CRT={CRT}
-            />
-            <ParametersDisplay
-                CRT={CRT}
-            />
-            <Instructions
-                instructions={instructions}
-                animation={animation}
-                setAnimation={setAnimation}
-                CRT={CRT}
-                setCRT={setCRT}
-            />
+            {
+                isError ? <ErrorAlert /> : 
+                isPending ? <PendingDisplay /> :
+                <>
+                    <AnimationController
+                        animation={animation}
+                        setAnimation={setAnimation}
+                    />
+                    <CRTdisplay
+                        CRT={CRT}
+                    />
+                    <ParametersDisplay
+                        CRT={CRT}
+                    />
+                    <Instructions
+                        instructions={instructions}
+                        animation={animation}
+                        setAnimation={setAnimation}
+                        CRT={CRT}
+                        setCRT={setCRT}
+                    />
+                </>
+            }
         </article>
     )
 }

@@ -1,0 +1,14 @@
+.error-container {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    height: 270px;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    gap: 1rem;
+    background-color: #787878;
+    color: white;
+    margin-top: 4rem;
+    border-radius: 1rem;
+}

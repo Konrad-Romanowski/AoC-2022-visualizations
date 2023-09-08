@@ -7,6 +7,8 @@ import SandCounter from './SandCounter';
 import './day14styles.css';
 import { Point, GameMap } from './day14Types';
 import useFetch from '../../hooks/useFetch';
+import ErrorAlert from '../ErrorAlert/ErrorAlert';
+import PendingDisplay from '../PendingDisplay/PendingDisplay';
 
 export default function Day14() {
     const [animation, setAnimation] = React.useState<AnimationInterface>({
@@ -118,16 +120,22 @@ export default function Day14() {
     return (
         <article>
             <header className='sub-header'>Day 14 part 2 visualization</header>
-            <AnimationController 
-                animation={animation}
-                setAnimation={setAnimation}
-            />
-            <Canvas
-                map={map}
-                sandGenerator={sandGenerator}
-                floorLevel={floorLevel}
-            />
-            <SandCounter sandCounter={sand.sandCounter} />
+            {
+                isError ? <ErrorAlert /> :
+                isPending ? <PendingDisplay /> :
+                <>
+                    <AnimationController 
+                        animation={animation}
+                        setAnimation={setAnimation}
+                    />
+                    <Canvas
+                        map={map}
+                        sandGenerator={sandGenerator}
+                        floorLevel={floorLevel}
+                    />
+                    <SandCounter sandCounter={sand.sandCounter} />
+                </>
+            }
         </article>
     )
 }
