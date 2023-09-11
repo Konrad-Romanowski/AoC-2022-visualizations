@@ -5,53 +5,17 @@ import generateMap from './generateMap';
 import Canvas from './Canvas';
 import SandCounter from './SandCounter';
 import './day14styles.css';
-import { Point, GameMap } from './day14Types';
+import { Point, GameMap, REDUCER_ACTION_TYPE } from './day14Types';
 import useFetch from '../../hooks/useFetch';
 import ErrorAlert from '../ErrorAlert/ErrorAlert';
 import PendingDisplay from '../PendingDisplay/PendingDisplay';
+import {sandReducer, sandInitialState} from './sandReducer';
 
 export default function Day14() {
     const [animation, setAnimation] = React.useState<AnimationInterface>({
         isRunning: false,
         isCompleted: false,
     });
-
-    // sand generator position
-    const sandGenerator:Point = {x:500, y:0};
-
-    // initial state for useReducer
-    const sandInitialState = {x:sandGenerator.x, y:sandGenerator.y, canMove: true, sandCounter: 0}
-
-    // action types for useReducer
-    const enum REDUCER_ACTION_TYPE {
-        CREATE_NEW_SAND,
-        MOVE_DOWN,
-        MOVE_DOWN_LEFT,
-        MOVE_DOWN_RIGHT,
-        TOGGLE_MOVE
-    }
-
-    type ReducerAction = {
-        type: REDUCER_ACTION_TYPE
-    }
-
-    // reducer function for sand
-    const sandReducer = (state: typeof sandInitialState, action:ReducerAction): typeof sandInitialState => {
-        switch(action.type) {
-            case REDUCER_ACTION_TYPE.CREATE_NEW_SAND:
-                return {...sandInitialState, sandCounter: state.sandCounter+1};
-            case REDUCER_ACTION_TYPE.MOVE_DOWN:
-                return {...state, y: state.y+1}
-            case REDUCER_ACTION_TYPE.MOVE_DOWN_LEFT:
-                return {...state, x: state.x-1, y: state.y+1}
-            case REDUCER_ACTION_TYPE.MOVE_DOWN_RIGHT:
-                return {...state, x: state.x+1, y: state.y+1}
-            case REDUCER_ACTION_TYPE.TOGGLE_MOVE:
-                return {...state, canMove: false};
-            default:
-                throw new Error();
-        }
-    }
 
     const [rockPath, setRockPath] = React.useState<Array<Point[]>>([]);
     const [floorLevel,setFloorLevel] = React.useState<number>(0);
@@ -130,7 +94,6 @@ export default function Day14() {
                     />
                     <Canvas
                         map={map}
-                        sandGenerator={sandGenerator}
                         floorLevel={floorLevel}
                     />
                     <SandCounter sandCounter={sand.sandCounter} />

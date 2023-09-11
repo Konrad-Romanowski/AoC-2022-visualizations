@@ -1,13 +1,13 @@
 import React from 'react';
-import { Point, GameMap } from './day14Types';
+import { GameMap } from './day14Types';
+import { sandGeneratorPosition } from './sandGeneratorPosition';
 
 interface CanvasProps {
     floorLevel: number;
-    sandGenerator: Point;
     map: GameMap;
 }
 
-export default function Canvas({map,sandGenerator,floorLevel}:CanvasProps) {
+export default function Canvas({map,floorLevel}:CanvasProps) {
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
     const width = 800;
     const height = 400;
@@ -44,7 +44,7 @@ export default function Canvas({map,sandGenerator,floorLevel}:CanvasProps) {
 
         // draw sand generator
         ctx.fillStyle = 'red';
-        ctx.fillRect(sandGenerator.x+(sandGenerator.x+translationVector.x),sandGenerator.y+(sandGenerator.y+translationVector.y),1*scale,1*scale);
+        ctx.fillRect(sandGeneratorPosition.x+(sandGeneratorPosition.x+translationVector.x),sandGeneratorPosition.y+(sandGeneratorPosition.y+translationVector.y),1*scale,1*scale);
 
     },[map]);
 
