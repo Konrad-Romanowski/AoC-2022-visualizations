@@ -17,7 +17,7 @@ export default function AnimationController({animation, setAnimation}:animationC
 
     return (
         <section className="controllers">
-            <button onClick={handleClick}>{animation.isRunning ? "Stop" : "Start"}</button>
+            <button disabled={animation.isCompleted} onClick={handleClick}>{animation.isRunning ? "Stop" : "Start"}</button>
         </section>
     )
 }

@@ -56,12 +56,11 @@ export default function Instructions(
             const currentInstruction = instructions[currentInstructionIndex];
             readInstruction(currentInstruction.instruction);
         }
-
+        
         if(currentInstructionIndex >= instructions.length) {
             setAnimation(prevState => {
                 return {...prevState, isRunning: false, isCompleted: true}
             });
-            //set start-stop controller button inactive
         }
 
     },[currentInstructionIndex,animation.isRunning, animation.isCompleted])

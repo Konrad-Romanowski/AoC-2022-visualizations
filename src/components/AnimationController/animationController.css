@@ -16,3 +16,7 @@
     padding: .5rem 1.5rem;
     cursor: pointer;
 }
+
+.controllers > button:disabled {
+    background-color: #797979;
+}
