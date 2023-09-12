@@ -56,6 +56,9 @@ export default function Day14() {
     },[rockPath]);
 
     React.useEffect(()=>{
+        if(map[`[500,0]`] === 'o') {
+            setAnimation({isRunning: false, isCompleted: true});
+        }
         if(!sand.canMove) {
             setMap(prevMap => {
                 return {...prevMap, [`[${sand.x},${sand.y}]`]: 'o'}
@@ -66,9 +69,6 @@ export default function Day14() {
 
     React.useEffect(()=>{
         if(!animation.isCompleted && animation.isRunning) {
-            if(sand.x === 500 && sand.y === 0 && !sand.canMove) {
-                setAnimation({isRunning: false, isCompleted: true})
-            }
             if(!map[`[${sand.x},${sand.y+1}]`] && sand.y+1 !== floorLevel) {
                 sandDispatch({type:REDUCER_ACTION_TYPE.MOVE_DOWN});
             } else if(!map[`[${sand.x-1},${sand.y+1}]`] && sand.y+1 !== floorLevel) {
