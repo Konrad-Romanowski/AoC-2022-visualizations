@@ -5,6 +5,14 @@ export type Rope = {
     tail: Point[];
 }
 
+export type InstructionType = {
+    id: String,
+    direction: String,
+    numberOfSteps: Number,
+}
+
+export interface InstructionsInterface extends Array<InstructionType> {}
+
 export const enum REDUCER_ACTION_TYPE {
     MOVE_UP,
     MOVE_DOWN,
