@@ -1,11 +1,12 @@
 import React from 'react';
-import {InstructionType, InstructionsInterface} from './day9Types';
+import {InstructionsInterface} from './day9Types';
+import './day9styles.css';
 
 interface InstructionsProps {
     instructions: InstructionsInterface,
     setInstructions:  React.Dispatch<React.SetStateAction<InstructionsInterface>>,
-    currentInstructionIndex: Number,
-    setCurrentInstructionIndex: React.Dispatch<React.SetStateAction<Number>>
+    currentInstructionIndex: number,
+    setCurrentInstructionIndex: React.Dispatch<React.SetStateAction<number>>
 }
 
 export default function Instructions(
@@ -18,10 +19,10 @@ export default function Instructions(
     }
 
     const instructionsElements = instructions.map((instruction,index) => 
-        <li key={index} style={index === currentInstructionIndex ? highlightedStyle : {}}>{instruction.direction}{instruction.numberOfSteps.toString()}</li>)
+        <li key={instruction.id} style={index === currentInstructionIndex ? highlightedStyle : {}}>{instruction.direction}{instruction.numberOfSteps.toString()}</li>)
 
     return (
-        <ul className='instructions'>
+        <ul className='day9-instructions'>
             {instructionsElements}
         </ul>
     )

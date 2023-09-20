@@ -1,0 +1,10 @@
+.day9-instructions {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+}
+
+.day9-instructions > li {
+    padding: 0 .5rem;
+    flex-basis: 0;
+}

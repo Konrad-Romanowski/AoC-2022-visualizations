@@ -6,9 +6,9 @@ export type Rope = {
 }
 
 export type InstructionType = {
-    id: String,
-    direction: String,
-    numberOfSteps: Number,
+    id: string,
+    direction: string,
+    numberOfSteps: number,
 }
 
 export interface InstructionsInterface extends Array<InstructionType> {}
@@ -18,7 +18,7 @@ export const enum REDUCER_ACTION_TYPE {
     MOVE_DOWN,
     MOVE_LEFT,
     MOVE_RIGHT,
-    MOVE_TAIL
+    UPDATE_TAIL
 }
 
 export type ReducerAction = {

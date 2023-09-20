@@ -4,24 +4,22 @@ import AnimationController from '../AnimationController/AnimationController';
 import AnimationInterface from '../AnimationController/AnimationInterface';
 import ErrorAlert from '../ErrorAlert/ErrorAlert';
 import PendingDisplay from '../PendingDisplay/PendingDisplay';
-// import { REDUCER_ACTION_TYPE } from './day9Types';
 import Instructions from './Instructions';
 import {InstructionsInterface} from './day9Types';
 import {nanoid} from 'nanoid';
+import Canvas from './Canvas';
+import {ropeInitialState, ropeReducer} from './ropeReducer';
 
 export default function Day9() {
 
-    // const [rope,ropeDispach] = React.useReducer(ropeReducer,initialState);
+    const [rope,ropeDispach] = React.useReducer(ropeReducer,ropeInitialState);
     const [animation, setAnimation] = React.useState<AnimationInterface>(
         {isRunning: false, isCompleted: false}
     );
 
     const {inputData, isError, isPending} = useFetch('./day9_input.txt');
-    // const [instructions,instructionsDispatch] = React.useReducer(instructionsReducer,ropeInitialState);
     const [instructions, setInstructions] = React.useState<InstructionsInterface>([]);
-    const [currentInstructionIndex, setCurrentInstructionIndex] = React.useState<Number>(0);
-
-    // instructions = {instruction:[{direction:String, numberOfSteos: number}], currentInstructionIndex: Number}
+    const [currentInstructionIndex, setCurrentInstructionIndex] = React.useState<number>(0);
 
     React.useEffect(()=>{
         const moves = inputData.split('\n');
@@ -49,6 +47,9 @@ export default function Day9() {
                 isError ? <ErrorAlert /> :
                 isPending ? <PendingDisplay/> :
                 <>
+                    <Canvas
+                        rope={rope}
+                    />
                     <Instructions
                         instructions={instructions}
                         setInstructions={setInstructions}
