@@ -9,9 +9,9 @@ export const ropeInitialState: Rope = {
 export function ropeReducer(state: Rope, action: ReducerAction): Rope {
     switch(action.type) {
         case REDUCER_ACTION_TYPE.MOVE_UP:
-            return {...state, head: {x:state.head.x, y: state.head.y+1}}
-        case REDUCER_ACTION_TYPE.MOVE_DOWN:
             return {...state, head: {x:state.head.x, y: state.head.y-1}}
+        case REDUCER_ACTION_TYPE.MOVE_DOWN:
+            return {...state, head: {x:state.head.x, y: state.head.y+1}}
         case REDUCER_ACTION_TYPE.MOVE_LEFT:
             return {...state, head: {x:state.head.x-1, y: state.head.y}}
         case REDUCER_ACTION_TYPE.MOVE_RIGHT:

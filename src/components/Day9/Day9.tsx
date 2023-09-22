@@ -55,6 +55,9 @@ export default function Day9() {
                         setInstructions={setInstructions}
                         currentInstructionIndex={currentInstructionIndex}
                         setCurrentInstructionIndex={setCurrentInstructionIndex}
+                        animation={animation}
+                        setAnimation={setAnimation}
+                        ropeDispatch={ropeDispach}
                     />
                 </>
             }

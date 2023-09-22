@@ -8,11 +8,25 @@ interface CanvasProps {
 
 export default function Canvas({rope}:CanvasProps) {
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
-    const width = 800;
-    const height = 400;
 
-    const translationVector = {x: 400, y:200};
-    const scale = 8;
+    // highest and lowest coordinates of ropes head for current input
+    // minX = -116
+    // maxX = 48
+    // canvasWidth => 48-(-116)=164
+
+    // minY = -126
+    // maxY = 67
+    // canvasHeight => 67-(-126)=194
+
+    // set proper scale, canvas size & translation vector 
+    // so the canvas will be fully used
+    // and the rope won't get off canvas at the same time
+    const scale = 4;
+    const width = 166*scale;
+    const height = 196*scale;
+
+    const translationVector = {x: 116, y:67};
+
     
     React.useEffect(()=>{
         const canvas = canvasRef.current;
@@ -27,7 +41,7 @@ export default function Canvas({rope}:CanvasProps) {
 
         // draw rope head
         ctx.fillStyle = '#0299fd';
-        ctx.fillRect(rope.head.x+translationVector.x,rope.head.y+translationVector.y,scale,scale);
+        ctx.fillRect((rope.head.x+translationVector.x)*scale,(rope.head.y+translationVector.y)*scale,scale,scale);
 
 
     },[rope.head.x,rope.head.y]);
