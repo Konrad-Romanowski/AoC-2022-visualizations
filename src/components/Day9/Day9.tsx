@@ -53,6 +53,7 @@ export default function Day9() {
                     if(direction === 'R') {
                         ropeDispatch({type: REDUCER_ACTION_TYPE.MOVE_RIGHT});
                     }
+                    ropeDispatch({type: REDUCER_ACTION_TYPE.UPDATE_TAIL});
                     resolve();
                 },1);
             });

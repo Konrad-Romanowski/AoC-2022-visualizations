@@ -39,10 +39,15 @@ export default function Canvas({rope}:CanvasProps) {
         ctx.fillStyle = 'white';
         ctx.fillRect(0,0,width,height);
 
+        // draw tail
+        ctx.fillStyle = 'black';
+        for(let i = rope.tail.length-1; i >= 0; i--) {
+            ctx.fillRect((rope.tail[i].x+translationVector.x)*scale,(rope.tail[i].y+translationVector.y)*scale,scale,scale);
+        }
+        
         // draw rope head
         ctx.fillStyle = '#0299fd';
         ctx.fillRect((rope.head.x+translationVector.x)*scale,(rope.head.y+translationVector.y)*scale,scale,scale);
-
 
     },[rope.head.x,rope.head.y]);
 
