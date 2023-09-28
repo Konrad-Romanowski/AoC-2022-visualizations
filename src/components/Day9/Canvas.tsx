@@ -39,6 +39,13 @@ export default function Canvas({rope}:CanvasProps) {
         ctx.fillStyle = 'white';
         ctx.fillRect(0,0,width,height);
 
+        // draw visited cells
+        ctx.fillStyle = 'grey';
+        for(let cell in rope.visitedCells) {
+            const {x:cellX,y:cellY} = JSON.parse(cell);
+            ctx.fillRect((cellX+translationVector.x)*scale,(cellY+translationVector.y)*scale,scale,scale);
+        }
+
         // draw tail
         ctx.fillStyle = 'black';
         for(let i = rope.tail.length-1; i >= 0; i--) {

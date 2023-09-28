@@ -1,10 +1,11 @@
 import React from 'react'
-import { Rope, REDUCER_ACTION_TYPE, ReducerAction } from './day9Types';
+import { Rope, REDUCER_ACTION_TYPE, ReducerAction} from './day9Types';
 import distance from './distance';
 
 export const ropeInitialState: Rope = {
     head: {x:0, y:0},
-    tail: Array.from({length: 9}, () => { return {x:0, y:0} })
+    tail: Array.from({length: 9}, () => { return {x:0, y:0} }),
+    visitedCells: {}
 }
 
 export function ropeReducer(state: Rope, action: ReducerAction): Rope {
@@ -56,6 +57,13 @@ export function ropeReducer(state: Rope, action: ReducerAction): Rope {
                 }
                 return {...state, tail: rope.slice(1)}
             }
+        case REDUCER_ACTION_TYPE.UPDATE_VISITED_CELLS: {
+            const tailLastItem = JSON.stringify(state.tail.at(-1));
+            const newVisitedCells = {...state.visitedCells};
+            tailLastItem in newVisitedCells ? null : newVisitedCells[tailLastItem] = true;
+
+            return {...state, visitedCells: newVisitedCells}
+        }
         default:
             throw new Error();
     }
