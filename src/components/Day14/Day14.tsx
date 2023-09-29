@@ -3,7 +3,7 @@ import AnimationController from '../AnimationController/AnimationController';
 import AnimationInterface from '../AnimationController/AnimationInterface';
 import generateMap from './generateMap';
 import Canvas from './Canvas';
-import SandCounter from './SandCounter';
+import Counter from '../Counter/Counter';
 import './day14styles.css';
 import { Point, GameMap, REDUCER_ACTION_TYPE } from './day14Types';
 import useFetch from '../../hooks/useFetch';
@@ -96,7 +96,10 @@ export default function Day14() {
                         map={map}
                         floorLevel={floorLevel}
                     />
-                    <SandCounter sandCounter={sand.sandCounter} />
+                    <Counter
+                        counterTitle='Sand grains'
+                        counter={sand.sandCounter}
+                    />
                 </>
             }
         </article>

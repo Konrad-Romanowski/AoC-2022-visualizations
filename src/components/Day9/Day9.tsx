@@ -9,7 +9,7 @@ import {InstructionType, InstructionsInterface, REDUCER_ACTION_TYPE} from './day
 import {nanoid} from 'nanoid';
 import Canvas from './Canvas';
 import {ropeInitialState, ropeReducer} from './ropeReducer';
-import Counter from './Counter';
+import Counter from '../Counter/Counter';
 
 export default function Day9() {
 
