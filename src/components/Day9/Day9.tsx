@@ -9,6 +9,7 @@ import {InstructionType, InstructionsInterface, REDUCER_ACTION_TYPE} from './day
 import {nanoid} from 'nanoid';
 import Canvas from './Canvas';
 import {ropeInitialState, ropeReducer} from './ropeReducer';
+import Counter from './Counter';
 
 export default function Day9() {
 
@@ -92,6 +93,10 @@ export default function Day9() {
                 <>
                     <Canvas
                         rope={rope}
+                    />
+                    <Counter
+                        counterTitle='Visited cells'
+                        counter={Object.keys(rope.visitedCells).length}
                     />
                     <Instructions
                         instructions={instructions}
