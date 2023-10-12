@@ -19,7 +19,7 @@ export function ropeReducer(state: Rope, action: ReducerAction): Rope {
         case REDUCER_ACTION_TYPE.MOVE_RIGHT:
             return {...state, head: {x:state.head.x+1, y: state.head.y}}
             case REDUCER_ACTION_TYPE.UPDATE_TAIL: {
-                const rope = [state.head, ...state.tail];
+                const rope = JSON.parse(JSON.stringify([state.head, ...state.tail]));
 
                 for(let i = 0; i < rope.length-1; i++) {
                     if(distance(rope[i], rope[i+1])>1) {

@@ -57,7 +57,7 @@ export default function Day9() {
                     ropeDispatch({type: REDUCER_ACTION_TYPE.UPDATE_TAIL});
                     ropeDispatch({type: REDUCER_ACTION_TYPE.UPDATE_VISITED_CELLS});
                     resolve();
-                },1);
+                },50);
             });
         }
 
