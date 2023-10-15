@@ -5,11 +5,12 @@ import AnimationInterface from '../AnimationController/AnimationInterface';
 import ErrorAlert from '../ErrorAlert/ErrorAlert';
 import PendingDisplay from '../PendingDisplay/PendingDisplay';
 import Instructions from './Instructions';
-import {InstructionType, InstructionsInterface, REDUCER_ACTION_TYPE} from './day9Types';
+import {InstructionsInterface} from './day9Types';
 import {nanoid} from 'nanoid';
 import Canvas from './Canvas';
 import {ropeInitialState, ropeReducer} from './ropeReducer';
 import Counter from '../Counter/Counter';
+import useDay9Solution from './useDay9Solution';
 
 export default function Day9() {
 
@@ -38,47 +39,14 @@ export default function Day9() {
         setInstructions(instructions);
     },[inputData]);
 
-    React.useEffect(()=>{
-        function performMove(direction:string):Promise<void> {
-            return new Promise<void>((resolve,reject) => {
-                setTimeout(()=>{
-                    if(direction === 'U') {
-                        ropeDispatch({type: REDUCER_ACTION_TYPE.MOVE_UP});
-                    }
-                    if(direction === 'D') {
-                        ropeDispatch({type: REDUCER_ACTION_TYPE.MOVE_DOWN});
-                    }
-                    if(direction === 'L') {
-                        ropeDispatch({type: REDUCER_ACTION_TYPE.MOVE_LEFT});
-                    }
-                    if(direction === 'R') {
-                        ropeDispatch({type: REDUCER_ACTION_TYPE.MOVE_RIGHT});
-                    }
-                    ropeDispatch({type: REDUCER_ACTION_TYPE.UPDATE_TAIL});
-                    ropeDispatch({type: REDUCER_ACTION_TYPE.UPDATE_VISITED_CELLS});
-                    resolve();
-                },50);
-            });
-        }
-
-        async function readInstruction(instruction:InstructionType) {
-            const {direction, numberOfSteps} = instruction;
-            for(let i = 0; i < numberOfSteps; i++) {
-                await performMove(direction);
-            }
-            setCurrentInstructionIndex(prevIndex => prevIndex+1);
-        }
-
-        if(animation.isRunning && currentInstructionIndex < instructions.length) {
-            readInstruction(instructions[currentInstructionIndex]);
-        }
-
-        if(instructions.length > 0 && currentInstructionIndex >= instructions.length) {
-            setAnimation(prevState => {
-                return {...prevState, isRunning: false, isCompleted: true}
-            });
-        }
-    },[currentInstructionIndex, animation.isRunning, animation.isCompleted]);
+    useDay9Solution({
+        animation,
+        setAnimation,
+        instructions,
+        currentInstructionIndex,
+        setCurrentInstructionIndex,
+        ropeDispatch
+    });
 
     return (
         <article>
