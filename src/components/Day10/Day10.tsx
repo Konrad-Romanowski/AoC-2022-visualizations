@@ -11,6 +11,7 @@ import { nanoid } from 'nanoid';
 import useFetch from '../../hooks/useFetch';
 import ErrorAlert from '../ErrorAlert/ErrorAlert';
 import PendingDisplay from '../PendingDisplay/PendingDisplay';
+import useDay10Solution from './useDay10Solution';
 
 export default function Day10() {
 
@@ -24,6 +25,7 @@ export default function Day10() {
         }
     );
     const [instructions, setInstructions] = React.useState<InstructionInterface[]>([]);
+    const [currentInstructionIndex, setCurrentInstructionIndex] = React.useState<number>(0);
     const [animation,setAnimation] = React.useState<AnimationInterface>(
         {
             isRunning: false,
@@ -38,6 +40,16 @@ export default function Day10() {
         });
         setInstructions(instructions);
     },[inputData]);
+
+    useDay10Solution({
+        CRT,
+        setCRT,
+        instructions,
+        currentInstructionIndex,
+        setCurrentInstructionIndex,
+        animation,
+        setAnimation
+    });
 
     return (
         <article>
@@ -58,10 +70,7 @@ export default function Day10() {
                     />
                     <Instructions
                         instructions={instructions}
-                        animation={animation}
-                        setAnimation={setAnimation}
-                        CRT={CRT}
-                        setCRT={setCRT}
+                        currentInstructionIndex={currentInstructionIndex}
                     />
                 </>
             }
