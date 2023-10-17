@@ -1,20 +1,19 @@
 import React from 'react';
 import CRTInterface from './CRTInterface';
-import InstructionInterface from './InstructionInterface';
+import InstructionsInterface from './InstructionsInterface';
 import AnimationInterface from '../AnimationController/AnimationInterface';
 
 interface useDay10SolutionInterface {
     CRT: CRTInterface,
     setCRT: React.Dispatch<React.SetStateAction<CRTInterface>>,
-    instructions: InstructionInterface[],
-    currentInstructionIndex: number,
-    setCurrentInstructionIndex: React.Dispatch<React.SetStateAction<number>>,
+    instructions: InstructionsInterface,
+    setInstructions: React.Dispatch<React.SetStateAction<InstructionsInterface>>,
     animation: AnimationInterface,
     setAnimation: React.Dispatch<React.SetStateAction<AnimationInterface>>,
 }
 
 export default function useDay10Solution(
-    {CRT, setCRT,instructions, currentInstructionIndex, setCurrentInstructionIndex, animation, setAnimation}: useDay10SolutionInterface)
+    {CRT, setCRT, instructions, setInstructions, animation, setAnimation}: useDay10SolutionInterface)
 {
     React.useEffect(()=>{
 
@@ -31,7 +30,9 @@ export default function useDay10Solution(
 
         const getNextInstruction = (): Promise<void> => {
             return new Promise<void> ((resolve,reject)=>{
-                setCurrentInstructionIndex(prevIndex => prevIndex+1);
+                setInstructions(prevState => {
+                    return {...prevState, currentInstructionIndex: prevState.currentInstructionIndex+1}
+                })
                 resolve();
             });
         }
@@ -50,18 +51,18 @@ export default function useDay10Solution(
             await getNextInstruction();
         }
 
-        if(animation.isRunning && currentInstructionIndex < instructions.length) {
-            const currentInstruction = instructions[currentInstructionIndex];
+        if(animation.isRunning && instructions.currentInstructionIndex < instructions.list.length) {
+            const currentInstruction = instructions.list[instructions.currentInstructionIndex];
             readInstruction(currentInstruction.instruction);
         }
         
-        if(instructions.length > 0 && currentInstructionIndex >= instructions.length) {
+        if(instructions.list.length > 0 && instructions.currentInstructionIndex >= instructions.list.length) {
             setAnimation(prevState => {
                 return {...prevState, isRunning: false, isCompleted: true}
             });
         }
 
-    },[currentInstructionIndex,animation.isRunning, animation.isCompleted]);
+    },[instructions.currentInstructionIndex,animation.isRunning, animation.isCompleted]);
 
     React.useEffect(()=>{
         if(Math.abs(CRT.cycle%40-CRT.X)<=1) {

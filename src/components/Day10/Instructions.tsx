@@ -1,11 +1,10 @@
-import InstructionInterface from './InstructionInterface';
+import InstructionsInterface from './InstructionsInterface';
 
 interface InstructionsProps {
-    instructions: InstructionInterface[];
-    currentInstructionIndex: number;
+    instructions: InstructionsInterface;
 }
 
-export default function Instructions({instructions, currentInstructionIndex}: InstructionsProps) {
+export default function Instructions({instructions}: InstructionsProps) {
 
     const highlightedStyle = {
         backgroundColor: "var(--main-theme-color)",
@@ -13,8 +12,9 @@ export default function Instructions({instructions, currentInstructionIndex}: In
         borderRadius: "1rem"
     }
 
-    const instructionsElements = instructions.map((instruction,index) => 
-        <li key={instruction.id} style={index === currentInstructionIndex ? highlightedStyle : {}}>{instruction.instruction}</li>)
+    const instructionsElements = instructions.list.map((instruction,index) => 
+        <li key={instruction.id} style={index === instructions.currentInstructionIndex ? highlightedStyle : {}}>{instruction.instruction}</li>
+    );
 
     return (
         <ul className="instructions">

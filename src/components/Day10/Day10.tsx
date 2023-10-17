@@ -6,7 +6,7 @@ import Instructions from './Instructions';
 import './day10styles.css';
 import AnimationInterface from '../AnimationController/AnimationInterface';
 import CRTInterface from './CRTInterface';
-import InstructionInterface from './InstructionInterface';
+import InstructionsInterface from './InstructionsInterface';
 import { nanoid } from 'nanoid';
 import useFetch from '../../hooks/useFetch';
 import ErrorAlert from '../ErrorAlert/ErrorAlert';
@@ -24,8 +24,10 @@ export default function Day10() {
             })
         }
     );
-    const [instructions, setInstructions] = React.useState<InstructionInterface[]>([]);
-    const [currentInstructionIndex, setCurrentInstructionIndex] = React.useState<number>(0);
+    const [instructions, setInstructions] = React.useState<InstructionsInterface>({
+        list: [],
+        currentInstructionIndex: 0
+    });
     const [animation,setAnimation] = React.useState<AnimationInterface>(
         {
             isRunning: false,
@@ -38,15 +40,14 @@ export default function Day10() {
         const instructions = inputData.split("\n").map(dataItem => {
             return {id: nanoid(), instruction: dataItem}
         });
-        setInstructions(instructions);
+        setInstructions({list: instructions, currentInstructionIndex: 0});
     },[inputData]);
 
     useDay10Solution({
         CRT,
         setCRT,
         instructions,
-        currentInstructionIndex,
-        setCurrentInstructionIndex,
+        setInstructions,
         animation,
         setAnimation
     });
@@ -70,7 +71,6 @@ export default function Day10() {
                     />
                     <Instructions
                         instructions={instructions}
-                        currentInstructionIndex={currentInstructionIndex}
                     />
                 </>
             }
