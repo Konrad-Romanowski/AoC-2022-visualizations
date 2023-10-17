@@ -10,6 +10,7 @@ import useFetch from '../../hooks/useFetch';
 import ErrorAlert from '../ErrorAlert/ErrorAlert';
 import PendingDisplay from '../PendingDisplay/PendingDisplay';
 import {sandReducer, sandInitialState} from './sandReducer';
+import useDay14Solution from './useDay14Solution';
 
 export default function Day14() {
     const [animation, setAnimation] = React.useState<AnimationInterface>({
@@ -55,31 +56,15 @@ export default function Day14() {
         setMap(generateMap(rockPath));
     },[rockPath]);
 
-    React.useEffect(()=>{
-        if(map[`[500,0]`] === 'o') {
-            setAnimation({isRunning: false, isCompleted: true});
-        }
-        if(!sand.canMove) {
-            setMap(prevMap => {
-                return {...prevMap, [`[${sand.x},${sand.y}]`]: 'o'}
-            });
-            sandDispatch({type:REDUCER_ACTION_TYPE.CREATE_NEW_SAND});
-        }
-    },[sand.canMove]);
-
-    React.useEffect(()=>{
-        if(!animation.isCompleted && animation.isRunning) {
-            if(!map[`[${sand.x},${sand.y+1}]`] && sand.y+1 !== floorLevel) {
-                sandDispatch({type:REDUCER_ACTION_TYPE.MOVE_DOWN});
-            } else if(!map[`[${sand.x-1},${sand.y+1}]`] && sand.y+1 !== floorLevel) {
-                sandDispatch({type:REDUCER_ACTION_TYPE.MOVE_DOWN_LEFT});
-            } else if(!map[`[${sand.x+1},${sand.y+1}]`] && sand.y+1 !== floorLevel) {
-                sandDispatch({type:REDUCER_ACTION_TYPE.MOVE_DOWN_RIGHT});
-            } else {
-                sandDispatch({type:REDUCER_ACTION_TYPE.TOGGLE_MOVE});
-            }
-        }
-    },[animation.isRunning, animation.isCompleted, sand.y]);
+    useDay14Solution({
+        sand,
+        sandDispatch,
+        animation,
+        setAnimation,
+        map,
+        setMap,
+        floorLevel
+    })
 
     return (
         <article>

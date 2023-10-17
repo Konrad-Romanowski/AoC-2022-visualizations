@@ -3,7 +3,7 @@ import CRTInterface from './CRTInterface';
 import InstructionInterface from './InstructionInterface';
 import AnimationInterface from '../AnimationController/AnimationInterface';
 
-interface useDay10Solution {
+interface useDay10SolutionInterface {
     CRT: CRTInterface,
     setCRT: React.Dispatch<React.SetStateAction<CRTInterface>>,
     instructions: InstructionInterface[],
@@ -14,7 +14,7 @@ interface useDay10Solution {
 }
 
 export default function useDay10Solution(
-    {CRT, setCRT,instructions, currentInstructionIndex, setCurrentInstructionIndex, animation, setAnimation}: useDay10Solution)
+    {CRT, setCRT,instructions, currentInstructionIndex, setCurrentInstructionIndex, animation, setAnimation}: useDay10SolutionInterface)
 {
     React.useEffect(()=>{
 
