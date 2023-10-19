@@ -1,12 +1,11 @@
-import {InstructionsInterface} from './day9Types';
+import InstructionsInterface from './InstructionsInterface';
 import './day9styles.css';
 
 interface InstructionsProps {
     instructions: InstructionsInterface,
-    currentInstructionIndex: number,
 }
 
-export default function Instructions({instructions, currentInstructionIndex}:InstructionsProps) {
+export default function Instructions({instructions}:InstructionsProps) {
 
     const highlightedStyle = {
         backgroundColor: "var(--main-theme-color)",
@@ -14,8 +13,8 @@ export default function Instructions({instructions, currentInstructionIndex}:Ins
         borderRadius: "1rem"
     }
 
-    const instructionsElements = instructions.map((instruction,index) => 
-        <li key={instruction.id} style={index === currentInstructionIndex ? highlightedStyle : {}}>{instruction.direction}{instruction.numberOfSteps.toString()}</li>)
+    const instructionsElements = instructions.list.map((instruction,index) => 
+        <li key={instruction.id} style={index === instructions.currentInstructionIndex ? highlightedStyle : {}}>{instruction.direction}{instruction.numberOfSteps.toString()}</li>)
 
     return (
         <ul className='day9-instructions'>

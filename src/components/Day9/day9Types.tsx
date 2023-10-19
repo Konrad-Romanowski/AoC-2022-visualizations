@@ -16,8 +16,6 @@ export type InstructionType = {
     numberOfSteps: number,
 }
 
-export interface InstructionsInterface extends Array<InstructionType> {}
-
 export const enum REDUCER_ACTION_TYPE {
     MOVE_UP,
     MOVE_DOWN,

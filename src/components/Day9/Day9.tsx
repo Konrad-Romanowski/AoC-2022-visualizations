@@ -5,7 +5,7 @@ import AnimationInterface from '../AnimationController/AnimationInterface';
 import ErrorAlert from '../ErrorAlert/ErrorAlert';
 import PendingDisplay from '../PendingDisplay/PendingDisplay';
 import Instructions from './Instructions';
-import {InstructionsInterface} from './day9Types';
+import InstructionsInterface from './InstructionsInterface'
 import {nanoid} from 'nanoid';
 import Canvas from './Canvas';
 import {ropeInitialState, ropeReducer} from './ropeReducer';
@@ -18,10 +18,11 @@ export default function Day9() {
     const [animation, setAnimation] = React.useState<AnimationInterface>(
         {isRunning: false, isCompleted: false}
     );
-
+    const [instructions, setInstructions] = React.useState<InstructionsInterface>({
+        list: [],
+        currentInstructionIndex: 0
+    });
     const {inputData, isError, isPending} = useFetch('./day9_input.txt');
-    const [instructions, setInstructions] = React.useState<InstructionsInterface>([]);
-    const [currentInstructionIndex, setCurrentInstructionIndex] = React.useState<number>(0);
 
     // trnasform input data into more usefull structure
     React.useEffect(()=>{
@@ -36,15 +37,14 @@ export default function Day9() {
             return {id: nanoid(), direction, numberOfSteps: parseInt(steps[0])};
         });
 
-        setInstructions(instructions);
+        setInstructions({list: instructions, currentInstructionIndex: 0});
     },[inputData]);
 
     useDay9Solution({
         animation,
         setAnimation,
         instructions,
-        currentInstructionIndex,
-        setCurrentInstructionIndex,
+        setInstructions,
         ropeDispatch
     });
 
@@ -68,7 +68,6 @@ export default function Day9() {
                     />
                     <Instructions
                         instructions={instructions}
-                        currentInstructionIndex={currentInstructionIndex}
                     />
                 </>
             }

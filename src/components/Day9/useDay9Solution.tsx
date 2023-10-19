@@ -1,18 +1,18 @@
 import React from 'react';
-import { REDUCER_ACTION_TYPE, ReducerAction, InstructionType, InstructionsInterface} from './day9Types';
+import {REDUCER_ACTION_TYPE, ReducerAction, InstructionType} from './day9Types';
+import InstructionsInterface from './InstructionsInterface';
 import AnimationInterface from '../AnimationController/AnimationInterface';
 
 interface useDay9SolutionInterface {
     animation: AnimationInterface,
     setAnimation: React.Dispatch<React.SetStateAction<AnimationInterface>>,
     instructions: InstructionsInterface,
-    currentInstructionIndex: number,
-    setCurrentInstructionIndex: React.Dispatch<React.SetStateAction<number>>,
+    setInstructions: React.Dispatch<React.SetStateAction<InstructionsInterface>>,
     ropeDispatch: React.Dispatch<ReducerAction>;
 }
 
 export default function useDay9Solution(
-    {animation, setAnimation, instructions, currentInstructionIndex, setCurrentInstructionIndex, ropeDispatch}: useDay9SolutionInterface)
+    {animation, setAnimation, instructions, setInstructions, ropeDispatch}: useDay9SolutionInterface)
 {
 
     React.useEffect(()=>{
@@ -43,18 +43,20 @@ export default function useDay9Solution(
             for(let i = 0; i < numberOfSteps; i++) {
                 await performMove(direction);
             }
-            setCurrentInstructionIndex(prevIndex => prevIndex+1);
+            setInstructions(prevIndex => {
+                return {...prevIndex, currentInstructionIndex: prevIndex.currentInstructionIndex+1}
+            });
         }
 
-        if(animation.isRunning && currentInstructionIndex < instructions.length) {
-            readInstruction(instructions[currentInstructionIndex]);
+        if(animation.isRunning && instructions.currentInstructionIndex < instructions.list.length) {
+            readInstruction(instructions.list[instructions.currentInstructionIndex]);
         }
 
-        if(instructions.length > 0 && currentInstructionIndex >= instructions.length) {
+        if(instructions.list.length > 0 && instructions.currentInstructionIndex >= instructions.list.length) {
             setAnimation(prevState => {
                 return {...prevState, isRunning: false, isCompleted: true}
             });
         }
-    },[currentInstructionIndex, animation.isRunning, animation.isCompleted]);
+    },[instructions.currentInstructionIndex, animation.isRunning, animation.isCompleted]);
 
 }
