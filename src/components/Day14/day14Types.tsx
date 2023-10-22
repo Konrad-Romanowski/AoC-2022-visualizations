@@ -7,7 +7,6 @@ export type Map = {
 export type GameMap = {
     map: Map;
     floorLevel: number;
-    rocks: Point[][];
 }
 
 export type Sand = {

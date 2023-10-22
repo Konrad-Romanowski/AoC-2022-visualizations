@@ -19,8 +19,7 @@ export default function Day14() {
     });
     const [gameMap,setGameMap] = React.useState<GameMap>({
         map: {},
-        floorLevel: 0,
-        rocks: []
+        floorLevel: 0
     })
     const [sand, sandDispatch] = React.useReducer(sandReducer,sandInitialState);
     const {inputData,isPending,isError} = useFetch('./day14_input.txt');
@@ -49,8 +48,7 @@ export default function Day14() {
 
         setGameMap({
             map: generateMap(solidRockPaths),
-            floorLevel:lowestRocksLevel+2,
-            rocks: solidRockPaths
+            floorLevel:lowestRocksLevel+2
         });
 
     },[inputData]);
