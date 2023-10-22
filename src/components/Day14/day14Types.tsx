@@ -1,7 +1,13 @@
 export type Point = {x: number, y: number};
 
-export type GameMap = {
+export type Map = {
     [key: string]: string;
+}
+
+export type GameMap = {
+    map: Map;
+    floorLevel: number;
+    rocks: Point[][];
 }
 
 export type Sand = {

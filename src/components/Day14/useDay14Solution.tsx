@@ -7,22 +7,23 @@ interface useDay14SolutionInterface {
     sandDispatch: React.Dispatch<ReducerAction>,
     animation: AnimationInterface,
     setAnimation: React.Dispatch<React.SetStateAction<AnimationInterface>>,
-    map: GameMap,
-    setMap: React.Dispatch<React.SetStateAction<GameMap>>,
-    floorLevel: number
+    gameMap: GameMap,
+    setGameMap: React.Dispatch<React.SetStateAction<GameMap>>
 }
 
 export default function useDay14Solution(
-    {sand, sandDispatch, animation, setAnimation, map, setMap, floorLevel}: useDay14SolutionInterface)
+    {sand, sandDispatch, animation, setAnimation, gameMap, setGameMap}: useDay14SolutionInterface)
 {
 
     React.useEffect(()=>{
-        if(map[`[500,0]`] === 'o') {
+        if(gameMap.map[`[500,0]`] === 'o') {
             setAnimation({isRunning: false, isCompleted: true});
         }
         if(!sand.canMove) {
-            setMap(prevMap => {
-                return {...prevMap, [`[${sand.x},${sand.y}]`]: 'o'}
+            setGameMap(prevState => {
+                return {...prevState,
+                    map: {...prevState.map, [`[${sand.x},${sand.y}]`]: 'o'}
+                }
             });
             sandDispatch({type:REDUCER_ACTION_TYPE.CREATE_NEW_SAND});
         }
@@ -30,11 +31,11 @@ export default function useDay14Solution(
 
     React.useEffect(()=>{
         if(!animation.isCompleted && animation.isRunning) {
-            if(!map[`[${sand.x},${sand.y+1}]`] && sand.y+1 !== floorLevel) {
+            if(!gameMap.map[`[${sand.x},${sand.y+1}]`] && sand.y+1 !== gameMap.floorLevel) {
                 sandDispatch({type:REDUCER_ACTION_TYPE.MOVE_DOWN});
-            } else if(!map[`[${sand.x-1},${sand.y+1}]`] && sand.y+1 !== floorLevel) {
+            } else if(!gameMap.map[`[${sand.x-1},${sand.y+1}]`] && sand.y+1 !== gameMap.floorLevel) {
                 sandDispatch({type:REDUCER_ACTION_TYPE.MOVE_DOWN_LEFT});
-            } else if(!map[`[${sand.x+1},${sand.y+1}]`] && sand.y+1 !== floorLevel) {
+            } else if(!gameMap.map[`[${sand.x+1},${sand.y+1}]`] && sand.y+1 !== gameMap.floorLevel) {
                 sandDispatch({type:REDUCER_ACTION_TYPE.MOVE_DOWN_RIGHT});
             } else {
                 sandDispatch({type:REDUCER_ACTION_TYPE.TOGGLE_MOVE});

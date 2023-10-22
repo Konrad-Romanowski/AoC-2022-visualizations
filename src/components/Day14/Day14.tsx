@@ -5,7 +5,7 @@ import generateMap from './generateMap';
 import Canvas from './Canvas';
 import Counter from '../Counter/Counter';
 import './day14styles.css';
-import { Point, GameMap, REDUCER_ACTION_TYPE } from './day14Types';
+import { Point, GameMap } from './day14Types';
 import useFetch from '../../hooks/useFetch';
 import ErrorAlert from '../ErrorAlert/ErrorAlert';
 import PendingDisplay from '../PendingDisplay/PendingDisplay';
@@ -17,10 +17,11 @@ export default function Day14() {
         isRunning: false,
         isCompleted: false,
     });
-
-    const [rockPath, setRockPath] = React.useState<Array<Point[]>>([]);
-    const [floorLevel,setFloorLevel] = React.useState<number>(0);
-    const [map, setMap] = React.useState<GameMap>({});
+    const [gameMap,setGameMap] = React.useState<GameMap>({
+        map: {},
+        floorLevel: 0,
+        rocks: []
+    })
     const [sand, sandDispatch] = React.useReducer(sandReducer,sandInitialState);
     const {inputData,isPending,isError} = useFetch('./day14_input.txt');
 
@@ -31,9 +32,9 @@ export default function Day14() {
 
         let lowestRocksLevel = -Infinity;
 
-        const solidRockPaths = solidRockPathsInput.reduce((rockPaths:Array<Point[]>,path:string)=>{
+        const solidRockPaths = solidRockPathsInput.reduce((rockPaths:Point[][],path:string)=>{
             const pathAsArray = path.split(' -> ');
-            const singlePath = pathAsArray.reduce((points:Array<Point>,point:string)=>{
+            const singlePath = pathAsArray.reduce((points:Point[],point:string)=>{
                 const pointCoordinates = point.split(',');
                 const x = parseInt(pointCoordinates[0]);
                 const y = parseInt(pointCoordinates[1]);
@@ -45,26 +46,23 @@ export default function Day14() {
             rockPaths.push(singlePath);
             return rockPaths;
         },[]);
-        
-        setFloorLevel(lowestRocksLevel+2);
-        setRockPath(solidRockPaths);
+
+        setGameMap({
+            map: generateMap(solidRockPaths),
+            floorLevel:lowestRocksLevel+2,
+            rocks: solidRockPaths
+        });
 
     },[inputData]);
-
-    // Generate map with rock obstacles
-    React.useEffect(()=>{
-        setMap(generateMap(rockPath));
-    },[rockPath]);
 
     useDay14Solution({
         sand,
         sandDispatch,
         animation,
         setAnimation,
-        map,
-        setMap,
-        floorLevel
-    })
+        gameMap,
+        setGameMap
+    });
 
     return (
         <article>
@@ -78,8 +76,7 @@ export default function Day14() {
                         setAnimation={setAnimation}
                     />
                     <Canvas
-                        map={map}
-                        floorLevel={floorLevel}
+                        gameMap={gameMap}
                     />
                     <Counter
                         counterTitle='Sand grains'

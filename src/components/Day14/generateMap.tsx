@@ -1,7 +1,7 @@
-import { Point, GameMap } from './day14Types';
+import { Point, Map } from './day14Types';
 
-export default function generateMap(rockPaths:Array<Point[]>) {
-    const map:GameMap = {}
+export default function generateMap(rockPaths:Point[][]) {
+    const map:Map = {}
 
     rockPaths.forEach(path => {
         for(let i = 0; i < path.length - 1; i++) {
@@ -12,7 +12,7 @@ export default function generateMap(rockPaths:Array<Point[]>) {
     return map;
 }
 
-function drawPath(map:GameMap,p1:Point,p2:Point) {
+function drawPath(map:Map,p1:Point,p2:Point) {
     // create horizontal line
     if(p1.x === p2.x) {
         const yStart = Math.min(p1.y,p2.y);
